@@ -36,5 +36,6 @@ JCSim lack some basic features:
  
 ## Future of jcsim
 
-I do not work anymore in JCSim. I will clean up some code sometimes, but I will no add new features. 
+I do not work anymore in JCSim. I will clean up some code sometimes, but I will no add new features. I am currently working in a new circuit simulator [VSim](https://github.com/almejo/jcsim)
+
 
