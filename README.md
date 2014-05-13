@@ -1,6 +1,6 @@
 # JCSim
 
-_Important_: JCSim is not supported anymore. I am currently working in a new circuit simulator, VSIM. You can go and check 
+*Important*: JCSim is not supported anymore. I am currently working in a new circuit simulator, VSIM. You can go and check 
 this project in [https://github.com/almejo/vsim](https://github.com/almejo/jcsim)
 
 ## What is JCSim
