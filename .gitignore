@@ -3,3 +3,7 @@
 out/
 *.iml
 /bin/**
+/out/**
+*.iml
+.idea/
+src/META-INF/
