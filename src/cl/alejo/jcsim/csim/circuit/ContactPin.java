@@ -1,17 +1,17 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  * Subclase que simula un contacto que contiene un
  * Pin.
- *  
+ *
  */
 package cl.alejo.jcsim.csim.circuit;
 
@@ -25,11 +25,9 @@ public class ContactPin extends Contact {
 
 	/**
 	 * Se crea un contactPin en la coordenada (x,y)
-	 * 
-	 * @param x
-	 *            int La coordenada x
-	 * @param y
-	 *            int
+	 *
+	 * @param x int La coordenada x
+	 * @param y int
 	 */
 	public ContactPin(int x, int y) {
 		super(x, y);
@@ -37,28 +35,29 @@ public class ContactPin extends Contact {
 
 	/**
 	 * Verificamos si dos contactos son iguales
-	 * 
+	 *
+	 * @param o java.lang.Object El objeto con que compararemos
 	 * @return boolean Si el punt es el mismo o no
-	 * @param o
-	 *            java.lang.Object El objeto con que compararemos
 	 */
 	public boolean equals(Object o) {
-		if (!(o instanceof Contact) || o == null)
+		if (!(o instanceof Contact) || o == null) {
 			return false;
+		}
 
 		return ((ContactPin) o)._x == _x && ((ContactPin) o)._y == _y;
 	}
 
 	/**
 	 * Obtenemos el valor de los pines en ese contacto
-	 * 
+	 *
 	 * @return byte El valor
 	 */
 	public byte getVal() {
-		if (_pinList == null)
+		if (_pinList == null) {
 			return -1;
+		}
 
-		return (byte) ((Pin) _pinList.get(0)).getInValue();
+		return ((Pin) _pinList.get(0)).getInValue();
 	}
 
 	public Pin getGuidePin() {

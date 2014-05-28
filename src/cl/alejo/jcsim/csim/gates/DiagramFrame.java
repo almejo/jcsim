@@ -1,29 +1,27 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.BorderLayout;
+
+import cl.alejo.jcsim.csim.dom.Pin;
+import cl.alejo.jcsim.csim.simulation.Agenda;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import cl.alejo.jcsim.csim.dom.Pin;
-import cl.alejo.jcsim.csim.simulation.Agenda;
 
 public class DiagramFrame extends JFrame implements ActionListener {
 	private DiagramCanvas dCanvas = new DiagramCanvas();
@@ -37,9 +35,6 @@ public class DiagramFrame extends JFrame implements ActionListener {
 	// El evento de dibujo
 	private PlotEvent plotEvent;
 
-	/**
-	 * DiagramFrame constructor comment.
-	 */
 	public DiagramFrame(Agenda agenda) {
 		super("Timming diagram");
 
@@ -66,12 +61,6 @@ public class DiagramFrame extends JFrame implements ActionListener {
 		plotEvent.program(0);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (27/04/01 11:20:38)
-	 * 
-	 * @param event
-	 *            java.awt.event.ActionEvent
-	 */
 	public void actionPerformed(ActionEvent event) {
 
 		// Veo si es el boton de print
@@ -82,22 +71,11 @@ public class DiagramFrame extends JFrame implements ActionListener {
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 7:41:41)
-	 * 
-	 * @param label
-	 *            java.lang.String
-	 * @param pin
-	 *            csim.Pin
-	 */
 	public void add(String label, Pin pin) {
 		nCanvas.add(label);
 		dCanvas.add(pin);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/05/01 15:42:46)
-	 */
 	public void end() {
 		// Primero cancelamos el evento
 		if (plotEvent != null)

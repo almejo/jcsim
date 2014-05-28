@@ -1,25 +1,21 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.test;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JToolBar;
 
 public class TestListeners extends JFrame implements KeyListener {
 

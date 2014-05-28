@@ -1,22 +1,20 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.window.action;
 
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.KeyStroke;
-
 import cl.alejo.jcsim.window.Window;
+
+import javax.swing.*;
 
 public abstract class AbstractWinAction extends AbstractAction {
 

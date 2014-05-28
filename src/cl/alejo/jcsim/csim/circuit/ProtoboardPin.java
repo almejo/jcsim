@@ -1,25 +1,25 @@
 package cl.alejo.jcsim.csim.circuit;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.Color;
-import java.awt.Graphics2D;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import cl.alejo.jcsim.csim.dom.Gate;
 import cl.alejo.jcsim.csim.dom.Pin;
+
+import java.awt.*;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ProtoboardPin extends Protoboard {
 	/**
@@ -34,11 +34,9 @@ public class ProtoboardPin extends Protoboard {
 	 * Inserta un Pin en la posicion X,Y del Protoboard y lo conecta con todos
 	 * aquellos pines que compartan los cables. Creation date: (06/09/96
 	 * 12:08:12 a.m.)
-	 * 
-	 * @param x
-	 *            int coordenadas donde insertar el pin
-	 * @param y
-	 *            int
+	 *
+	 * @param x int coordenadas donde insertar el pin
+	 * @param y int
 	 */
 	public void addPin(byte pinId, Gate gate, int x, int y) {
 
@@ -55,15 +53,6 @@ public class ProtoboardPin extends Protoboard {
 		reconnect(contact);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (20/09/96 12:10:44
-	 * a.m.)
-	 * 
-	 * @param ctt
-	 *            csimgui.Contact
-	 * @param cttList
-	 *            java.util.List
-	 */
 	public void attachContacts(Contact contact, List contactsList) {
 		ContactPin contactPin = (ContactPin) contact;
 
@@ -95,78 +84,68 @@ public class ProtoboardPin extends Protoboard {
 	/**
 	 * obtiene la lista de pines que tiene el los contactos de la lista Creation
 	 * date: (20/09/96 04:50:24 p.m.)
-	 * 
+	 *
+	 * @param contactsList List
 	 * @return java.util.List
-	 * @param ctt
-	 *            csimgui.Contact
 	 */
 	public List getAttachedPins(List contactsList) {
 
 		List pinList = new LinkedList();
 
-		for (Iterator iterator = contactsList.iterator(); iterator.hasNext();) {
+		for (Iterator iterator = contactsList.iterator(); iterator.hasNext(); ) {
 			ContactPin ctt = (ContactPin) iterator.next();
-			if (ctt.getPinList() != null)
+			if (ctt.getPinList() != null) {
 				pinList.addAll(ctt.getPinList().list());
+			}
 		}
 		return pinList;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (06/09/96 12:04:28
-	 * a.m.)
-	 * 
-	 * @return newgui.Contact
-	 */
 	public Contact makeContact(int x, int y) {
 		return new ContactPin(x, y);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/09/96 10:22:43
-	 * p.m.)
-	 * 
-	 * @param txcv
-	 *            newgui.TextCanvas
-	 */
 	public void paint(Graphics2D canvas, Box boxViewport) {
 
 		ContactPin previousContact = null;
 		canvas.setColor(Color.GREEN);
-		for (Iterator iterH = _matrix.iteratorX(); iterH.hasNext();) {
+		for (Iterator iterH = _matrix.iteratorX(); iterH.hasNext(); ) {
 			ContactPin currentContact = (ContactPin) iterH.next();
 
-			if (previousContact != null && isConnected(previousContact, EAST)
-				&& boxViewport.isIntersected(previousContact, currentContact))
+			if (previousContact != null && isConnected(previousContact, EAST) && boxViewport.isIntersected(previousContact, currentContact)) {
 				drawWire(canvas, previousContact, currentContact);
+			}
 
 			drawContact(canvas, currentContact);
 			previousContact = currentContact;
 
-			if (currentContact._y > boxViewport._yf)
+			if (currentContact._y > boxViewport._yf) {
 				break;
+			}
 		}
 
 		previousContact = null;
 
-		for (Iterator iterV = _matrix.iteratorY(); iterV.hasNext();) {
+		for (Iterator iterV = _matrix.iteratorY(); iterV.hasNext(); ) {
 			ContactPin currentContact = (ContactPin) iterV.next();
 
 			canvas.setColor(getGuideColor(currentContact));
-			if (previousContact != null && isConnected(previousContact, NORTH)
-				&& boxViewport.isIntersected(previousContact, currentContact))
+			if (previousContact != null && isConnected(previousContact, NORTH) && boxViewport.isIntersected(previousContact, currentContact)) {
 				drawWire(canvas, previousContact, currentContact);
+			}
 
 			previousContact = currentContact;
-			if (currentContact._x > boxViewport._xf)
+			if (currentContact._x > boxViewport._xf) {
 				break;
+			}
 		}
 	}
 
 	private void drawContact(Graphics2D canvas, ContactPin contact) {
 		int connections = countConnections(contact);
-		if (connections == 2 || connections == 3)
+		if (connections == 2 || connections == 3) {
 			return;
+		}
 		Color color = canvas.getColor();
 		canvas.setColor(getGuideColor(contact));
 		canvas.fillRect(contact._x + Circuit.HALF_GRIDSIZE - 3, contact._y + Circuit.HALF_GRIDSIZE - 3, 7, 7);
@@ -187,32 +166,26 @@ public class ProtoboardPin extends Protoboard {
 	private Color getGuideColor(ContactPin contact) {
 		if (contact.getGuidePin() != null) {
 			switch (contact.getGuidePin().getInValue()) {
-			case 0:
-				return Color.BLACK;
-			case 1:
-				return Color.RED;
-			case -1:
-				return Color.GREEN;
+				case 0:
+					return Color.BLACK;
+				case 1:
+					return Color.RED;
+				case -1:
+					return Color.GREEN;
 			}
 		}
 		return Color.GREEN;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (06/09/96 12:01:18
-	 * a.m.)
-	 * 
-	 * @param cttList
-	 *            java.util.List
-	 */
 	public void reconnect(List contactList) {
 
 		List listPin = reconnectContactPins(contactList);
 
 		Pin firstPin = null;
 
-		if (listPin.size() > 0)
+		if (listPin.size() > 0) {
 			firstPin = (Pin) listPin.get(0);
+		}
 
 		setGuidePin(firstPin, contactList);
 
@@ -244,16 +217,6 @@ public class ProtoboardPin extends Protoboard {
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (01/01/01 20:54:35)
-	 * 
-	 * @param pin
-	 *            csim.Pin
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public void removePin(byte pinId, Gate gate, int x, int y) {
 		ContactPin contact = (ContactPin) poke(x, y);
 
@@ -274,17 +237,17 @@ public class ProtoboardPin extends Protoboard {
 	 * Este metodo comprueba que un contacto sea relevante. Un contacto es
 	 * relevante cuando, tiene pines, o bien, es una esquina o el extremo de un
 	 * cable. Si el contacto no cumple esas
-	 * 
-	 * @param ctt
-	 *            newgui.Contact
+	 *
+	 * @param contact newgui.Contact
 	 */
 	public void testContact(Contact contact) {
 
-		if (((ContactPin) contact).hasPins())
+		if (((ContactPin) contact).hasPins()) {
 			return;
+		}
 
 		if (contact.isHorizontalMiddlePoint() || contact.isVerticalMiddlePoint() || !contact.isConnected()) {
-			deleteContact((ContactPin) contact); // El nodo no era trascendente
+			deleteContact(contact); // El nodo no era trascendente
 		}
 	}
 }

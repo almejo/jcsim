@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.csim.gates;
 
@@ -36,14 +36,6 @@ public class Clk extends ConfigurableGate {
 		_pin[0].hasChanged();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/04/01 19:06:23)
-	 * 
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public void apply(int x, int y) {
 
 		// REcupero los valores
@@ -51,14 +43,11 @@ public class Clk extends ConfigurableGate {
 		int delayDown = ((ParamClk) _parameters).delayDown;
 
 		// Lleno el arreglo y lo mando
-		String[] txtparams = { "up period", "down period" };
-		String[] valparams = { "" + delayUp, "" + delayDown };
+		String[] txtparams = {"up period", "down period"};
+		String[] valparams = {"" + delayUp, "" + delayDown};
 		config(txtparams, valparams);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/05/01 18:08:07)
-	 */
 	public void clean() {
 
 		// Limpiando
@@ -66,14 +55,6 @@ public class Clk extends ConfigurableGate {
 		((ClkPin) _pin[0]).clkEvent.cancel();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/04/01 19:06:23)
-	 * 
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public void fillParams(String[] params) {
 
 		// Recupero los delay

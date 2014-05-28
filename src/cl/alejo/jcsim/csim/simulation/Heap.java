@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Luis Mateu
- *  
+ *
  */
 package cl.alejo.jcsim.csim.simulation;
 
@@ -30,9 +30,8 @@ public class Heap implements java.io.Serializable {
 
 	/**
 	 * Borra <i>element</i> del heap
-	 * 
-	 * @param HeapElement
-	 *            element del Heap
+	 *
+	 * @param element HeapElement  del Heap
 	 */
 	public void delete(HeapElement element) {
 		int i = element.ndx;
@@ -45,14 +44,15 @@ public class Heap implements java.io.Serializable {
 
 	/**
 	 * Extrae el primer elemento del heap
-	 * 
-	 * @return HeapElement element El elemento con el menor tiempo
+	 *
+	 * @return HeapElement El elemento con el menor tiempo
 	 */
 	public HeapElement extractMin() throws EmptyHeapException {
 		HeapElement element = null;
 
-		if (_size < 1)
+		if (_size < 1) {
 			throw new EmptyHeapException();
+		}
 
 		element = array[1];
 		array[1] = array[_size];
@@ -66,24 +66,19 @@ public class Heap implements java.io.Serializable {
 
 	/**
 	 * Busca el indice de <i>element</i> y retorna el indice dentro del arreglo
-	 * 
-	 * @param HeapElement
-	 *            element El elemento a buscar
+	 *
+	 * @param element HeapElement El elemento a buscar
 	 * @return int index El indice
 	 */
 	public int findElement(HeapElement element) {
-		for (int j = 1; j <= _size; j++)
-			if (array[j] == element)
+		for (int j = 1; j <= _size; j++) {
+			if (array[j] == element) {
 				return j;
+			}
+		}
 		return -1;
 	}
 
-	/**
-	 * Inserta un elemento en el Heap
-	 * 
-	 * @param HeapElement
-	 *            element
-	 */
 	public void insert(HeapElement element) {
 		_size++;
 
@@ -96,16 +91,17 @@ public class Heap implements java.io.Serializable {
 
 	/**
 	 * Organiza los elementos del arreglo luego deuna insercion
-	 * 
-	 * @param int key La llave del elemento insertados
+	 *
+	 * @param key double  La llave del elemento insertados
 	 */
 	private int organizeElements(double key) {
 		int i;
 		int j1;
 		for (j1 = _size; j1 > 1; j1 = i) {
 			i = j1 / 2;
-			if (array[i].key() <= key)
+			if (array[i].key() <= key) {
 				break;
+			}
 			array[j1] = array[i];
 			array[j1].ndx = j1;
 		}
@@ -116,20 +112,22 @@ public class Heap implements java.io.Serializable {
 		int i;
 		if (_size == array.length) {
 			HeapElement[] aux = new HeapElement[array.length * 2];
-			for (i = 1; i < array.length; i++)
+			for (i = 1; i < array.length; i++) {
 				aux[i] = array[i];
+			}
 			array = aux;
 		}
 	}
 
 	/**
 	 * Recupera el elemento con el menor tiempo en el Heap
-	 * 
+	 *
 	 * @return HeapElement element El primer elemento del Heap
 	 */
 	public HeapElement getFirstElement() throws EmptyHeapException {
-		if (_size < 1)
+		if (_size < 1) {
 			throw new EmptyHeapException();
+		}
 		return array[1];
 	}
 
@@ -149,8 +147,9 @@ public class Heap implements java.io.Serializable {
 		HeapElement tempr;
 		int j;
 		while ((j = 2 * i) <= _size) {
-			if (j < _size && array[j].key() > array[j + 1].key())
+			if (j < _size && array[j].key() > array[j + 1].key()) {
 				j++;
+			}
 			if (array[i].key() > array[j].key()) {
 				tempr = array[j];
 				array[j] = array[i];
@@ -158,14 +157,15 @@ public class Heap implements java.io.Serializable {
 				array[i] = tempr;
 				array[i].ndx = i;
 				i = j;
-			} else
+			} else {
 				break;
+			}
 		}
 	}
 
 	/**
 	 * Imprime los elementos del heap
-	 * 
+	 *
 	 * @return java.lang.String msg El string con los eventos
 	 */
 	public String toString() {
@@ -178,18 +178,6 @@ public class Heap implements java.io.Serializable {
 
 	public int getSize() {
 		return _size;
-	}
-
-	public void setSize(int size) {
-		_size = size;
-	}
-
-	public HeapElement[] getArray() {
-		return array;
-	}
-
-	public void setArray(HeapElement[] array) {
-		this.array = array;
 	}
 
 }

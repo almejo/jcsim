@@ -1,16 +1,16 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 
 import cl.alejo.jcsim.csim.circuit.Circuit;
@@ -31,16 +31,9 @@ public class NotDescriptor extends IconGateDescriptor {
 		this.pinCount = 2;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (26/06/01 21:27:43)
-	 * 
-	 * @return csim.Gate
-	 * @param params
-	 *            gates.GateParameters
-	 */
 	public Gate make(Circuit circuit, GateParameters params) {
 
 		// La compuerta
-		return new Not(circuit, (GateDescriptor) this, (GateParameters) params.clone());
+		return new Not(circuit, this, (GateParameters) params.clone());
 	}
 }

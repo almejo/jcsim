@@ -1,42 +1,38 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.util.List;
 
 import cl.alejo.jcsim.csim.dom.Gate;
 import cl.alejo.jcsim.csim.dom.Pin;
 import cl.alejo.jcsim.window.ImageChooser;
+
+import java.util.List;
 
 public class Encapsulated extends Gate {
 
 	// El conjunto de compuertas
 	Gate[] gates;
 
-	/**
-	 * Ecapsulated constructor comment.
-	 */
 	public Encapsulated() {
 		super();
 	}
 
 	/**
 	 * Abrimos la ventana de eleccion de imagen.
-	 * 
-	 * @param x
-	 *            int Coordenada x
-	 * @param y
-	 *            int Coordenada y
+	 *
+	 * @param x int Coordenada x
+	 * @param y int Coordenada y
 	 */
 	public void apply(int x, int y) {
 
@@ -46,11 +42,9 @@ public class Encapsulated extends Gate {
 	/**
 	 * Agrega todos los pines internos conecados a este pin. En el caso base,
 	 * solo agrega el mismo pin Creation date: (16/07/01 12:29:17)
-	 * 
-	 * @param pinId
-	 *            int
-	 * @param listPin
-	 *            java.util.List
+	 *
+	 * @param pinId   int
+	 * @param listPin java.util.List
 	 */
 
 	public void getPinsAt(int pinId, List listPin) {
@@ -69,9 +63,8 @@ public class Encapsulated extends Gate {
 
 		// Ahora tengo que recorrer la lista de tonteras
 		// Agregando a la lista
-		int ndx = pinId;
-		int ndxGate = connectOut[ndx][0];
-		int ndxPin = connectOut[ndx][1];
+		int ndxGate = connectOut[pinId][0];
+		int ndxPin = connectOut[pinId][1];
 
 		// Rescato el primer gate
 		Gate gate = gates[ndxGate];

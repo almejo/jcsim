@@ -1,20 +1,21 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
 
 import cl.alejo.jcsim.window.Window;
+
+import java.awt.event.MouseEvent;
 
 public class StateSelect extends State {
 

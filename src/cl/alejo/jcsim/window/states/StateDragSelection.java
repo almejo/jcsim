@@ -1,20 +1,21 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
 
 import cl.alejo.jcsim.window.Window;
+
+import java.awt.event.MouseEvent;
 
 public class StateDragSelection extends State {
 	/**
@@ -37,12 +38,10 @@ public class StateDragSelection extends State {
 	/**
 	 * Evento invocado cuando el mouse entra a una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseEntered(Window window, MouseEvent event) {
 		// // Primero, la ventana anterior termina su drag
@@ -67,12 +66,10 @@ public class StateDragSelection extends State {
 	/**
 	 * Evento invocado cuando el mouse sale de una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseExited(Window window, MouseEvent event) {
 		// // Este es dropTarget
@@ -94,8 +91,9 @@ public class StateDragSelection extends State {
 		pointDrop = getLocalCoords(window, event.getX(), event.getY());
 
 		// Actualizo el cambio en el circuito
-		if (winDrop.getCircuit() != null)
+		if (winDrop.getCircuit() != null) {
 			winDrop.getCircuit().dragSelection(pointDrop._x, pointDrop._y);
+		}
 		return this;
 	}
 }

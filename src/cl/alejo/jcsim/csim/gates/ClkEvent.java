@@ -1,17 +1,18 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
+
 import cl.alejo.jcsim.csim.dom.Gate;
 import cl.alejo.jcsim.csim.simulation.Agenda;
 
@@ -19,12 +20,6 @@ public class ClkEvent extends cl.alejo.jcsim.csim.simulation.Event {
 	// El reloj
 	Clk clk;
 
-	/**
-	 * ClkEvent constructor comment.
-	 * 
-	 * @param agen
-	 *            tools.Agenda
-	 */
 	public ClkEvent(Gate gate, Agenda agen) {
 		super(agen);
 
@@ -44,10 +39,11 @@ public class ClkEvent extends cl.alejo.jcsim.csim.simulation.Event {
 		int delayUp = ((ParamClk) clk.getParameters()).delayUp;
 
 		// Reprogramamos el cambio para el reloj
-		if (state == 0)
+		if (state == 0) {
 			program(delayDown);
-		else
+		} else {
 			program(delayUp);
+		}
 
 		// Ahora cambiamos el valor del reloj para ahora.
 		clk.getPin()[0].hasChanged();

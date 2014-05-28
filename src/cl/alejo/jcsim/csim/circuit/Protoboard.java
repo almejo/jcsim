@@ -1,23 +1,24 @@
 package cl.alejo.jcsim.csim.circuit;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.Graphics2D;
+
+import cl.alejo.jcsim.csim.dom.Gate;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import cl.alejo.jcsim.csim.dom.Gate;
 
 abstract public class Protoboard implements java.io.Serializable {
 
@@ -40,73 +41,58 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Devuelve en que direccion esta ctt1 con respecto a ctt2 Creation date:
 	 * (07/09/96 01:10:18 a.m.)
-	 * 
+	 *
+	 * @param contact1 newgui.Contact
+	 * @param contact2 newgui.Contact
 	 * @return int
-	 * @param ctt1
-	 *            newgui.Contact
-	 * @param ctt2
-	 *            newgui.Contact
 	 */
 	public int address(Contact contact1, Contact contact2) {
-		if (contact2._x > contact1._x)
+		if (contact2._x > contact1._x) {
 			return WEST;
-		if (contact2._x < contact1._x)
+		}
+		if (contact2._x < contact1._x) {
 			return EAST;
-		if (contact2._y < contact1._y)
+		}
+		if (contact2._y < contact1._y) {
 			return NORTH;
+		}
 		return SOUTH;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/09/96 08:27:41
-	 * p.m.)
-	 * 
-	 * @param ctt
-	 *            newgui.Contact
-	 * @param cttList
-	 *            java.util.List
-	 */
 	abstract protected void attachContacts(Contact ctt, List listCtt);
 
 	/**
 	 * Este metodo es una mascara a metodo que conecta contactos... Creation
 	 * date: (07/09/96 01:14:55 a.m.)
-	 * 
-	 * @param xi
-	 *            int X inicial
-	 * @param yi
-	 *            int Y inicial
-	 * @param xf
-	 *            int X final
-	 * @param yf
-	 *            int Y final
+	 *
+	 * @param xi int X inicial
+	 * @param yi int Y inicial
+	 * @param xf int X final
+	 * @param yf int Y final
 	 */
 	public void connect(int xi, int yi, int xf, int yf) {
-		if (xi == xf && yi == yf)
+		if (xi == xf && yi == yf) {
 			return;
+		}
 
-		if (xi == xf)
+		if (xi == xf) {
 			connectVertical(poke(xi, yi), poke(xf, yf));
-		if (yi == yf)
+		}
+		if (yi == yf) {
 			connectHorizontal(poke(xi, yi), poke(xf, yf));
+		}
 	}
 
 	/**
 	 * Una mascara para conectar dos puntos en l Creation date: (07/09/96
 	 * 01:14:11 a.m.)
-	 * 
-	 * @param xi
-	 *            int
-	 * @param yi
-	 *            int
-	 * @param xm
-	 *            int
-	 * @param ym
-	 *            int
-	 * @param xf
-	 *            int
-	 * @param yf
-	 *            int
+	 *
+	 * @param xi int
+	 * @param yi int
+	 * @param xm int
+	 * @param ym int
+	 * @param xf int
+	 * @param yf int
 	 */
 	public void connect(int xi, int yi, int xm, int ym, int xf, int yf) {
 		connect(xi, yi, xm, ym);
@@ -116,17 +102,16 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Este metodo conecta 2 contactos que se asume que existen Creation date:
 	 * (07/09/96 01:14:55 a.m.)
-	 * 
-	 * @param ctt1
-	 *            Contact es el primer contacto
-	 * @param ctt2
-	 *            Contact es el segundo contacto
+	 *
+	 * @param contact1 Contact es el primer contacto
+	 * @param contact2 Contact es el segundo contacto
 	 */
 	protected void connectHorizontal(Contact contact1, Contact contact2) {
 		Contact contactA, contactB;
 
-		if (contact1 == null || contact2 == null)
+		if (contact1 == null || contact2 == null) {
 			return;
+		}
 
 		if (contact1._x < contact2._x) {
 			contactA = contact1;
@@ -148,7 +133,7 @@ abstract public class Protoboard implements java.io.Serializable {
 	private List reconectInnerPinsHorizontaly(Contact contactA, Contact contactB) {
 		List testContactList = _matrix.getPointList(contactA, contactB);
 
-		for (Iterator i = testContactList.iterator(); i.hasNext();) {
+		for (Iterator i = testContactList.iterator(); i.hasNext(); ) {
 			Contact ctt = (Contact) i.next();
 			setConnect(ctt, EAST);
 			setConnect(ctt, WEST);
@@ -161,17 +146,16 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Este metodo es una mascara a metodo que conecta contactos... Creation
 	 * date: (07/09/96 01:14:55 a.m.)
-	 * 
-	 * @param ctt1
-	 *            Contact es el primer contacto
-	 * @param ctt2
-	 *            Contact es el segundo contacto
+	 *
+	 * @param ctt1 Contact es el primer contacto
+	 * @param ctt2 Contact es el segundo contacto
 	 */
 	protected void connectVertical(Contact ctt1, Contact ctt2) {
 		Contact ctta, cttb;
 
-		if (ctt1 == null || ctt2 == null)
+		if (ctt1 == null || ctt2 == null) {
 			return;
+		}
 
 		if (ctt1._y < ctt2._y) {
 			ctta = ctt1;
@@ -192,7 +176,7 @@ abstract public class Protoboard implements java.io.Serializable {
 	}
 
 	private void testList(List contactList) {
-		for (Iterator i = contactList.iterator(); i.hasNext();) {
+		for (Iterator i = contactList.iterator(); i.hasNext(); ) {
 			Contact contact = (Contact) i.next();
 			testContact(contact);
 		}
@@ -201,7 +185,7 @@ abstract public class Protoboard implements java.io.Serializable {
 	private List reconnectInnerPinsVerticaly(Contact ctta, Contact cttb) {
 		List contactList = _matrix.getPointList(ctta, cttb);
 
-		for (Iterator i = contactList.iterator(); i.hasNext();) {
+		for (Iterator i = contactList.iterator(); i.hasNext(); ) {
 			Contact ctt = (Contact) i.next();
 			setConnect(ctt, NORTH);
 			setConnect(ctt, SOUTH);
@@ -213,25 +197,15 @@ abstract public class Protoboard implements java.io.Serializable {
 	}
 
 	/**
-	 * Borramos un contacto inutil de la matriz Creation date: (14/09/96
-	 * 08:03:35 p.m.)
-	 * 
-	 * @param ctt
-	 *            newgui.Contact
+	 * Borramos un contacto inutil de la matriz
+	 * Creation date: (14/09/96 08:03:35 p.m.)
+	 *
+	 * @param ctt newgui.Contact
 	 */
 	protected void deleteContact(Contact ctt) {
 		_matrix.remove(ctt);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (29/09/00 01:08:01
-	 * a.m.)
-	 * 
-	 * @param ctt1
-	 *            csimgui.Contact
-	 * @param ctt2
-	 *            csimgui.Contact
-	 */
 	public void disconnect(int x, int y) {
 
 		int resultH = _matrix.findHorizontal(x, y);
@@ -240,17 +214,17 @@ abstract public class Protoboard implements java.io.Serializable {
 		Contact next = (Contact) _matrix.next();
 
 		switch (resultH) {
-		case Matrix.EXIST:
-			if (isConnected(hit, EAST) || isConnected(hit, WEST)) {
-				disconnectHorizontal(previous, hit, next);
-				return;
-			}
-			break;
-		case Matrix.BETWEEN:
-			if (isConnected(previous, EAST)) {
-				disconnect(previous, next);
-				return;
-			}
+			case Matrix.EXIST:
+				if (isConnected(hit, EAST) || isConnected(hit, WEST)) {
+					disconnectHorizontal(previous, hit, next);
+					return;
+				}
+				break;
+			case Matrix.BETWEEN:
+				if (isConnected(previous, EAST)) {
+					disconnect(previous, next);
+					return;
+				}
 		}
 
 		int resultV = _matrix.findVertical(x, y);
@@ -260,26 +234,25 @@ abstract public class Protoboard implements java.io.Serializable {
 
 		// Veamos si habia algo
 		switch (resultV) {
-		case Matrix.EXIST:
-			if (isConnected(hit, NORTH) || isConnected(hit, SOUTH))
-				disconnectV(previous, hit, next);
-			return;
-		case Matrix.BETWEEN:
-			if (isConnected(previous, NORTH)) {
-				disconnect(previous, next);
+			case Matrix.EXIST:
+				if (isConnected(hit, NORTH) || isConnected(hit, SOUTH)) {
+					disconnectV(previous, hit, next);
+				}
 				return;
-			}
+			case Matrix.BETWEEN:
+				if (isConnected(previous, NORTH)) {
+					disconnect(previous, next);
+					return;
+				}
 		}
 	}
 
 	/**
 	 * Desconecta dos contactos en la misma linea Creation date: (01/01/01
 	 * 14:51:06)
-	 * 
-	 * @param ctt1
-	 *            circuit.Contact
-	 * @param ctt2
-	 *            circuit.Contact
+	 *
+	 * @param contact1 circuit.Contact
+	 * @param contact2 circuit.Contact
 	 */
 	public void disconnect(Contact contact1, Contact contact2) {
 
@@ -287,22 +260,22 @@ abstract public class Protoboard implements java.io.Serializable {
 		int dirCtt1, dirCtt2;
 
 		switch (dir) {
-		case WEST:
-			dirCtt1 = EAST;
-			dirCtt2 = WEST;
-			break;
-		case NORTH:
-			dirCtt1 = SOUTH;
-			dirCtt2 = NORTH;
-			break;
-		case SOUTH:
-			dirCtt1 = NORTH;
-			dirCtt2 = SOUTH;
-			break;
-		default:
-			dirCtt1 = WEST;
-			dirCtt2 = EAST;
-			break;
+			case WEST:
+				dirCtt1 = EAST;
+				dirCtt2 = WEST;
+				break;
+			case NORTH:
+				dirCtt1 = SOUTH;
+				dirCtt2 = NORTH;
+				break;
+			case SOUTH:
+				dirCtt1 = NORTH;
+				dirCtt2 = SOUTH;
+				break;
+			default:
+				dirCtt1 = WEST;
+				dirCtt2 = EAST;
+				break;
 		}
 
 		setDisconnect(contact1, dirCtt1);
@@ -319,11 +292,12 @@ abstract public class Protoboard implements java.io.Serializable {
 
 	/**
 	 * Desconecto el contacto <code>contact</code> y reconectamos
-	 * <code>contactNext</code> y <code>contactPrevious</code> Creation date:
-	 * (19/01/01 15:29:16)
-	 * 
-	 * @param ctt
-	 *            circuit.Contact
+	 * <code>contactNext</code> y <code>contactPrevious</code>
+	 * Creation date: (19/01/01 15:29:16)
+	 *
+	 * @param contactPrevious circuit.Contact
+	 * @param contact         circuit.Contact
+	 * @param contactNext     circuit.Contact
 	 */
 	public void disconnectHorizontal(Contact contactPrevious, Contact contact, Contact contactNext) {
 		if (isConnected(contact, WEST)) {
@@ -336,16 +310,18 @@ abstract public class Protoboard implements java.io.Serializable {
 		reconnect(contact);
 		testContact(contact);
 
-		if (isConnected(contact, WEST) && isConnected(contact, EAST))
+		if (isConnected(contact, WEST) && isConnected(contact, EAST)) {
 			connectHorizontal(contactPrevious, contactNext);
+		}
 	}
 
 	/**
 	 * Desconecto el contacto <code>contact</code> y reconectamos
 	 * <code>contactNext</code> Creation date: (19/01/01 15:29:16)
-	 * 
-	 * @param ctt
-	 *            circuit.Contact
+	 *
+	 * @param contactPrevious circuit.Contact
+	 * @param contact         circuit.Contact
+	 * @param contactNext     circuit.Contact
 	 */
 	public void disconnectV(Contact contactPrevious, Contact contact, Contact contactNext) {
 		if (isConnected(contact, SOUTH)) {
@@ -358,8 +334,9 @@ abstract public class Protoboard implements java.io.Serializable {
 		reconnect(contact);
 		testContact(contact);
 
-		if (isConnected(contact, SOUTH) && isConnected(contact, NORTH))
+		if (isConnected(contact, SOUTH) && isConnected(contact, NORTH)) {
 			connectVertical(contactPrevious, contactNext);
+		}
 	}
 
 	private void disconect(Contact contact, Contact sourceContact, int sfds, int dfgd) {
@@ -369,10 +346,6 @@ abstract public class Protoboard implements java.io.Serializable {
 		testContact(contact);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (20/09/96 07:41:03
-	 * p.m.)
-	 */
 	public Box extent() {
 		return _matrix.extend();
 	}
@@ -380,10 +353,9 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Metodo que crea y devuelve una nueva lista con todos los contactos
 	 * conectados al ctt. Creation date: (14/09/96 08:07:41 p.m.)
-	 * 
+	 *
+	 * @param contact newgui.Contact
 	 * @return java.util.List
-	 * @param ctt
-	 *            newgui.Contact
 	 */
 	public List findAttachedContacts(Contact contact) {
 		List listCtt = new ArrayList();
@@ -395,76 +367,64 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * DEvuelve true si <code>contact</code> esta conectado en direccion addr
 	 * Creation date: (07/09/96 01:39:40 a.m.)
-	 * 
+	 *
+	 * @param contact newgui.Contact
+	 * @param addr    int
 	 * @return boolean
-	 * @param ctt
-	 *            newgui.Contact
-	 * @param dir
-	 *            int
 	 */
 	public boolean isConnected(Contact contact, int addr) {
 		return (contact._conectionMask & (1 << addr)) != 0;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (28/06/01 13:35:31)
-	 * 
-	 * @return boolean
-	 */
 	public boolean isTerminal(Contact ctt) {
 		return countConnections(ctt) == 1;
 	}
 
 	public int countConnections(Contact ctt) {
 		int i = 0;
-		if (isConnected(ctt, EAST))
+		if (isConnected(ctt, EAST)) {
 			i++;
-		if (isConnected(ctt, NORTH))
+		}
+		if (isConnected(ctt, NORTH)) {
 			i++;
-		if (isConnected(ctt, WEST))
+		}
+		if (isConnected(ctt, WEST)) {
 			i++;
-		if (isConnected(ctt, SOUTH))
+		}
+		if (isConnected(ctt, SOUTH)) {
 			i++;
+		}
 		return i;
 	}
 
 	/**
-	 * Crea y devuelve un nuevo contacto Creation date: (06/09/96 12:03:54 a.m.)
-	 * 
+	 * Crea y devuelve un nuevo contacto
+	 * Creation date:  (06/09/96 12:03:54 a.m.)
+	 *
 	 * @return newgui.Contact
 	 */
 	public abstract Contact makeContact(int x, int y);
 
 	/**
-	 * Devuelve el opuesto a una direccion dada. Creation date: (07/09/96
-	 * 01:03:47 a.m.)
-	 * 
+	 * Devuelve el opuesto a una direccion dada.
+	 * Creation date: (07/09/96 01:03:47 a.m.)
+	 *
+	 * @param addr int
 	 * @return int
-	 * @param addr
-	 *            int
 	 */
 	public int opposite(int addr) {
 		return (addr + 2) & 3;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/09/96 10:30:11
-	 * p.m.)
-	 * 
-	 * @param Canvas
-	 *            newgui.TextCanvas
-	 */
 	public abstract void paint(Graphics2D Canvas, Box boxViewport);
 
 	/**
 	 * Metodo que devuelve verdadero si existe un contacto en la posicion x,y
 	 * Creation date: (19/10/00 08:04:23 p.m.)
-	 * 
+	 *
+	 * @param x int
+	 * @param y int
 	 * @return boolean
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
 	 */
 	public boolean peek(int x, int y) {
 		if (_matrix.findVertical(x, y) == Matrix.EXIST)
@@ -479,23 +439,23 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Este metodo devuelve verdader true si pasa un cable horizontal por x,y
 	 * Creation date: (19/10/00 08:03:10 p.m.)
-	 * 
+	 *
+	 * @param x int
+	 * @param y int
 	 * @return boolean
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
 	 */
 	public boolean peekH(int x, int y) {
 		int existH = _matrix.findHorizontal(x, y);
 
-		if (existH == Matrix.EXIST)
+		if (existH == Matrix.EXIST) {
 			return true;
+		}
 
 		if (existH == Matrix.BETWEEN) {
 			Contact contact = (Contact) _matrix.previous();
-			if (isConnected(contact, EAST))
+			if (isConnected(contact, EAST)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -503,23 +463,23 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Devuelve true si por x, y pasa un cable vertical Creation date: (19/10/00
 	 * 08:02:43 p.m.)
-	 * 
+	 *
+	 * @param x int
+	 * @param y int
 	 * @return boolean
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
 	 */
 	public boolean peekV(int x, int y) {
 		int existV = _matrix.findVertical(x, y);
 
-		if (existV == Matrix.EXIST)
+		if (existV == Matrix.EXIST) {
 			return true;
+		}
 
 		if (existV == Matrix.BETWEEN) {
 			Contact contact = (Contact) _matrix.previous();
-			if (isConnected(contact, NORTH))
+			if (isConnected(contact, NORTH)) {
 				return true;
+			}
 		}
 		return false;
 	}
@@ -527,19 +487,18 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Crea un nuevo contacto en la matriz y si pasan cables por ella, los une a
 	 * este contacto Creation date: (07/09/96 01:20:52 a.m.)
-	 * 
+	 *
+	 * @param x int
+	 * @param y int
 	 * @return newgui.Contact
-	 * @param x
-	 *            int
-	 * @param i
-	 *            int
 	 */
 	public Contact poke(int x, int y) {
 
 		int Hconnected = _matrix.findHorizontal(x, y);
 
-		if (Hconnected == Matrix.EXIST)
+		if (Hconnected == Matrix.EXIST) {
 			return (Contact) _matrix.hit();
+		}
 
 		Contact contact = makeContact(x, y);
 
@@ -559,23 +518,26 @@ abstract public class Protoboard implements java.io.Serializable {
 		Contact cttVprevious = (Contact) _matrix.previous();
 		Contact cttVnext = (Contact) _matrix.next();
 
-		if (cttHprevious != null && isConnected(cttHprevious, EAST))
+		if (cttHprevious != null && isConnected(cttHprevious, EAST)) {
 			setConnect(contact, WEST);
-		if (cttHnext != null && isConnected(cttHnext, WEST))
+		}
+		if (cttHnext != null && isConnected(cttHnext, WEST)) {
 			setConnect(contact, EAST);
-		if (cttVprevious != null && isConnected(cttVprevious, NORTH))
+		}
+		if (cttVprevious != null && isConnected(cttVprevious, NORTH)) {
 			setConnect(contact, SOUTH);
-		if (cttVnext != null && isConnected(cttVnext, SOUTH))
+		}
+		if (cttVnext != null && isConnected(cttVnext, SOUTH)) {
 			setConnect(contact, NORTH);
+		}
 		return contact;
 	}
 
 	/**
 	 * Reconecta todos los contactos que estan logicamente conectados a Ctt
 	 * Creation date: (01/01/01 14:54:25)
-	 * 
-	 * @param ctt
-	 *            circuit.Contact el contacto a revisar y reconectar
+	 *
+	 * @param contact circuit.Contact el contacto a revisar y reconectar
 	 */
 	public void reconnect(Contact contact) {
 		List attachedContacts = findAttachedContacts(contact);
@@ -585,58 +547,41 @@ abstract public class Protoboard implements java.io.Serializable {
 	/**
 	 * Reconecta los pines que existen en una lista de contactos Creation date:
 	 * (05/09/96 11:59:40 p.m.)
-	 * 
-	 * @param cttList
-	 *            java.util.List
+	 *
+	 * @param contactsList java.util.List
 	 */
 
 	public abstract void reconnect(List contactsList);
 
-	/**
-	 * Insert the method's description here. Creation date: (01/01/01 20:52:53)
-	 * 
-	 * @param pin
-	 *            csim.Pin
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
-
 	public abstract void removePin(byte pinId, Gate gate, int x, int y);
 
 	/**
-	 * Setea una conexion en la direccion especificada Creation date: (07/09/96
-	 * 01:38:51 a.m.)
-	 * 
-	 * @param ctt
-	 *            newgui.Contact
-	 * @param dir
-	 *            int
+	 * Setea una conexion en la direccion especificada
+	 * Creation date: (07/09/96 01:38:51 a.m.)
+	 *
+	 * @param contact newgui.Contact
+	 * @param dir     int
 	 */
 	protected void setConnect(Contact contact, int dir) {
 		contact._conectionMask = (byte) (contact._conectionMask | (1 << dir));
 	}
 
 	/**
-	 * Desconecta un contacto en alguna direccion Creation date: (07/09/96
-	 * 01:41:30 a.m.)
-	 * 
-	 * @param ctt
-	 *            newgui.Contact
-	 * @param addr
-	 *            int
+	 * Desconecta un contacto en alguna direccion
+	 * Creation date: (07/09/96 01:41:30 a.m.)
+	 *
+	 * @param contact newgui.Contact
+	 * @param dir     int
 	 */
 	protected void setDisconnect(Contact contact, int dir) {
 		contact._conectionMask = (byte) (contact._conectionMask & ~(1 << dir));
 	}
 
 	/**
-	 * Verifica si un contacto es necesario Creation date: (14/09/96 07:59:57
-	 * p.m.)
-	 * 
-	 * @param ctt
-	 *            newgui.Contact
+	 * Verifica si un contacto es necesario
+	 * Creation date: (14/09/96 07:59:57 p.m.)
+	 *
+	 * @param contact newgui.Contact
 	 */
-	public abstract void testContact(Contact ctt);
+	public abstract void testContact(Contact contact);
 }

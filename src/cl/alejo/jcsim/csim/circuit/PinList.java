@@ -1,27 +1,27 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  * una clase que contiene objetos del tipo
  * PinGatePar. Por motivos de eficiencia solo
  * crea una lista cuando hay mas de un par pin/gate
- * 
+ *
  */
 package cl.alejo.jcsim.csim.circuit;
+
+import cl.alejo.jcsim.csim.dom.Gate;
 
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import cl.alejo.jcsim.csim.dom.Gate;
 
 public class PinList implements Serializable {
 	private PinGatePar _pingate;
@@ -29,37 +29,39 @@ public class PinList implements Serializable {
 
 	/**
 	 * Agrego un pin a esta pseudo lista de pines
-	 * 
-	 * @param int pinId El ID del pin
+	 *
+	 * @param pinId int  El ID del pin
 	 * @para csim.Gate El Gate
 	 */
 	public void add(int pinId, Gate gate) {
 		PinGatePar pingate = new PinGatePar((byte) pinId, gate);
 
-		if (_pingate == null)
+		if (_pingate == null) {
 			_pingate = pingate;
-		else {
-			if (_pinList == null)
+		} else {
+			if (_pinList == null) {
 				_pinList = new LinkedList();
+			}
 			_pinList.add(pingate);
 		}
 	}
 
 	/**
 	 * Buscamos si el par existe
-	 * 
+	 *
+	 * @param pinId byte el id del pin
+	 * @param gate  Gate la compuerta
 	 * @return boolean
-	 * @param pinGate
-	 *            circuit.PinGatePar
 	 */
 	public boolean contains(byte pinId, Gate gate) {
 		PinGatePar pingateAux;
 
-		if (_pingate != null && equals(_pingate, pinId, gate))
+		if (_pingate != null && equals(_pingate, pinId, gate)) {
 			return true;
+		}
 
 		if (_pinList != null) {
-			for (Iterator iterator = _pinList.iterator(); iterator.hasNext();) {
+			for (Iterator iterator = _pinList.iterator(); iterator.hasNext(); ) {
 				pingateAux = (PinGatePar) iterator.next();
 				if (equals(pingateAux, pinId, gate))
 					return true;
@@ -74,10 +76,9 @@ public class PinList implements Serializable {
 
 	/**
 	 * Retorna un par de pin/gate espefico
-	 * 
+	 *
+	 * @param index int El indice
 	 * @return circuit.PinGatePar el par
-	 * @param index
-	 *            int El indice
 	 */
 	public Object get(int index) {
 
@@ -101,15 +102,17 @@ public class PinList implements Serializable {
 	public int indexOf(byte pinId, Gate gate) {
 		PinGatePar pingateAux;
 
-		if (_pingate != null && equals(_pingate, pinId, gate))
+		if (_pingate != null && equals(_pingate, pinId, gate)) {
 			return 0;
+		}
 
 		if (_pinList != null) {
 			int ndx = 1;
-			for (Iterator iterator = _pinList.iterator(); iterator.hasNext();) {
+			for (Iterator iterator = _pinList.iterator(); iterator.hasNext(); ) {
 				pingateAux = (PinGatePar) iterator.next();
-				if (equals(pingateAux, pinId, gate))
+				if (equals(pingateAux, pinId, gate)) {
 					return ndx;
+				}
 				ndx++;
 			}
 		}
@@ -121,7 +124,7 @@ public class PinList implements Serializable {
 	/**
 	 * Veo si esta pseudolista esta vacia Es tan facil como ver si el primer par
 	 * esta vacio
-	 * 
+	 *
 	 * @return boolean Si existe un pin en esta lista
 	 */
 	public boolean isEmpty() {
@@ -130,7 +133,7 @@ public class PinList implements Serializable {
 
 	/**
 	 * Devuelve una lista con todos los pines que contiene
-	 * 
+	 *
 	 * @return java.util.List
 	 */
 	public List list() {
@@ -140,7 +143,7 @@ public class PinList implements Serializable {
 			_pingate.getGate().getPinsAt(_pingate.getPinId(), list);
 
 			if (_pinList != null) {
-				for (Iterator iter = _pinList.iterator(); iter.hasNext();) {
+				for (Iterator iter = _pinList.iterator(); iter.hasNext(); ) {
 					PinGatePar pinGate = (PinGatePar) iter.next();
 					pinGate.getGate().getPinsAt(pinGate.getPinId(), list);
 				}
@@ -151,11 +154,10 @@ public class PinList implements Serializable {
 
 	/**
 	 * Sacamos un elemento de la lista
-	 * 
+	 *
+	 * @param pinId byte  El ID del pin
+	 * @param gate  Gate El gate
 	 * @return circuit.PinGatePar El par removido
-	 * @param byte pinId El ID del pin
-	 * @param csim
-	 *            .Gate El gate
 	 */
 	public Object remove(byte pinId, Gate gate) {
 		return remove(indexOf(pinId, gate));
@@ -163,16 +165,15 @@ public class PinList implements Serializable {
 
 	/**
 	 * Sacamos un elemento de la lista
-	 * 
-	 * @return circuit.PinGatePar El par removido
-	 * @param byte pinId El ID del pin
-	 * @param csim
-	 *            .Gate El gate
+	 *
+	 * @param i int el elemento
+	 * @return Object El par removido
 	 */
 	public Object remove(int i) {
 
-		if (i < 0)
+		if (i < 0) {
 			return null;
+		}
 
 		PinGatePar pingate;
 		if (i == 0) {
@@ -182,8 +183,9 @@ public class PinList implements Serializable {
 			pingate = removeAt(i++);
 		}
 
-		if (pingate == null)
+		if (pingate == null) {
 			return null;
+		}
 
 		return pingate.getGate().getPin(pingate.getPinId());
 	}
@@ -200,18 +202,20 @@ public class PinList implements Serializable {
 
 	/**
 	 * La cantidad de elemtentos Creation date: (16/07/01 2:24:45)
-	 * 
+	 *
 	 * @return int
 	 */
 	public int size() {
 
 		int size = 0;
 
-		if (_pingate != null)
+		if (_pingate != null) {
 			size++;
+		}
 
-		if (_pinList != null)
+		if (_pinList != null) {
 			size += _pinList.size();
+		}
 
 		return size;
 	}

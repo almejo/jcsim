@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.csim.simulation;
 
@@ -22,16 +22,15 @@ public abstract class Event extends HeapElement {
 
 	protected Agenda _agenda = null;
 
-	/**
-	 * Crea un nuevo evento asociado a una agenda de eventos
-	 * 
-	 * @param agen
-	 *            Tools.Agenda la agenda asociada a este evento
-	 */
 
 	public Event() {
 	}
 
+	/**
+	 * Crea un nuevo evento asociado a una agenda de eventos
+	 *
+	 * @param agenda Tools.Agenda  la agenda asociada a este evento
+	 */
 	public Event(Agenda agenda) {
 		_agenda = agenda;
 		ndx = -1;
@@ -41,8 +40,9 @@ public abstract class Event extends HeapElement {
 	 * Desprograma el evento de la agenda
 	 */
 	public final void cancel() {
-		if (isProgrammed())
+		if (isProgrammed()) {
 			_agenda.deleteEvent(this);
+		}
 	}
 
 	/**
@@ -53,7 +53,7 @@ public abstract class Event extends HeapElement {
 
 	/**
 	 * Indica si el evento esta programado. Si el evento en cuestion
-	 * 
+	 *
 	 * @return true Si este evento esta programado
 	 */
 
@@ -64,7 +64,7 @@ public abstract class Event extends HeapElement {
 	/**
 	 * Retorna la llave del evento, que en este caso corresponde al tiempo de
 	 * ocurrencia.
-	 * 
+	 *
 	 * @return _time El tiempo de ocurrencia.
 	 */
 	public double key() {
@@ -73,8 +73,8 @@ public abstract class Event extends HeapElement {
 
 	/**
 	 * Le resta <i>time </i> al tiempo en que ocurrira este evento
-	 * 
-	 * @param double time El tiempo a restar
+	 *
+	 * @param time double  El tiempo a restar
 	 */
 
 	public final void substract(double time) {
@@ -83,8 +83,8 @@ public abstract class Event extends HeapElement {
 
 	/**
 	 * Programa este evento en la agenda de trabajo.
-	 * 
-	 * @param double delay En cuanto tiempo mas se debe invocar el evento
+	 *
+	 * @param delay double En cuanto tiempo mas se debe invocar el evento
 	 */
 	public final void program(double delay) {
 		if (isProgrammed())
@@ -96,7 +96,7 @@ public abstract class Event extends HeapElement {
 
 	/**
 	 * Retorna el tiempo de ocurrencia.
-	 * 
+	 *
 	 * @return _time El tiempo de ocurrencia.
 	 */
 	public double getTime() {
@@ -106,16 +106,5 @@ public abstract class Event extends HeapElement {
 	/**
 	 * Setea el tiempo de ocurrencia
 	 */
-	public void setTime(double time) {
-		_time = time;
-	}
-
-	public Agenda getAgenda() {
-		return _agenda;
-	}
-
-	public void setAgenda(Agenda agenda) {
-		_agenda = agenda;
-	}
 
 }

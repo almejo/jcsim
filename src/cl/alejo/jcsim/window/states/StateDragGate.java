@@ -1,21 +1,22 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
 
 import cl.alejo.jcsim.csim.gates.IconGateCompilable;
 import cl.alejo.jcsim.window.Window;
+
+import java.awt.event.MouseEvent;
 
 public class StateDragGate extends State {
 	/**
@@ -58,7 +59,7 @@ public class StateDragGate extends State {
 
 			// Si tenia control presionado, borro el original
 			if (button_modiff != MODIF_CONTROL && button_modiff != MODIF_SHIFT && circSrc == circDrop
-				&& !circSrc._modificable)
+					&& !circSrc._modificable)
 				circSrc.delete(_iconTarget);
 
 			// Termino el drag en el circuito
@@ -81,12 +82,10 @@ public class StateDragGate extends State {
 	/**
 	 * Evento invocado cuando el mouse entra a una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseEntered(Window window, MouseEvent event) {
 		// Primero, la ventana anterior termina su drag
@@ -109,12 +108,10 @@ public class StateDragGate extends State {
 	/**
 	 * Evento invocado cuando el mouse sale de una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseExited(Window window, MouseEvent event) {
 		winDrop = winSrc;

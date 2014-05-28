@@ -1,63 +1,29 @@
 package cl.alejo.jcsim.imageTools;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.Image;
+
+import cl.alejo.jcsim.csim.circuit.Circuit;
+import cl.alejo.jcsim.csim.dom.Gate;
+import cl.alejo.jcsim.csim.gates.*;
+import cl.alejo.jcsim.csim.gates.Label;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
-
-import javax.swing.JButton;
-
-import cl.alejo.jcsim.csim.circuit.Circuit;
-import cl.alejo.jcsim.csim.dom.Gate;
-import cl.alejo.jcsim.csim.gates.AssocDescriptor;
-import cl.alejo.jcsim.csim.gates.Clk;
-import cl.alejo.jcsim.csim.gates.ClkDescriptor;
-import cl.alejo.jcsim.csim.gates.FFData;
-import cl.alejo.jcsim.csim.gates.FFDataDescriptor;
-import cl.alejo.jcsim.csim.gates.Flag;
-import cl.alejo.jcsim.csim.gates.FlagDescriptor;
-import cl.alejo.jcsim.csim.gates.GateAssoc;
-import cl.alejo.jcsim.csim.gates.GateDescriptor;
-import cl.alejo.jcsim.csim.gates.IconGate;
-import cl.alejo.jcsim.csim.gates.IconGateCompilable;
-import cl.alejo.jcsim.csim.gates.IconGateDescriptor;
-import cl.alejo.jcsim.csim.gates.IconImage;
-import cl.alejo.jcsim.csim.gates.Label;
-import cl.alejo.jcsim.csim.gates.LabelDescriptor;
-import cl.alejo.jcsim.csim.gates.Not;
-import cl.alejo.jcsim.csim.gates.NotDescriptor;
-import cl.alejo.jcsim.csim.gates.ParamAssocGate;
-import cl.alejo.jcsim.csim.gates.ParamClk;
-import cl.alejo.jcsim.csim.gates.ParamFFData;
-import cl.alejo.jcsim.csim.gates.ParamLabel;
-import cl.alejo.jcsim.csim.gates.ParamNot;
-import cl.alejo.jcsim.csim.gates.ParamSegmentDisplay;
-import cl.alejo.jcsim.csim.gates.ParamSwitch;
-import cl.alejo.jcsim.csim.gates.ParamTreeState;
-import cl.alejo.jcsim.csim.gates.ParamVoid;
-import cl.alejo.jcsim.csim.gates.SegmentDisplay;
-import cl.alejo.jcsim.csim.gates.SegmentDisplayDescriptor;
-import cl.alejo.jcsim.csim.gates.Switch;
-import cl.alejo.jcsim.csim.gates.SwitchDescriptor;
-import cl.alejo.jcsim.csim.gates.TemplateGate;
-import cl.alejo.jcsim.csim.gates.TemplateGateDescriptor;
-import cl.alejo.jcsim.csim.gates.TimeDiagram;
-import cl.alejo.jcsim.csim.gates.TimeDiagramDescriptor;
-import cl.alejo.jcsim.csim.gates.TreeState;
-import cl.alejo.jcsim.csim.gates.TreeStateDescriptor;
 
 public class CreateMenu extends javax.swing.JFrame implements java.awt.event.ActionListener {
 
@@ -198,17 +164,17 @@ public class CreateMenu extends javax.swing.JFrame implements java.awt.event.Act
 		descLabel = new LabelDescriptor(paramLabel);
 
 		// Asociativas
-		descAAnd2 = new AssocDescriptor((ParamAssocGate) paramAssocAnd2);
+		descAAnd2 = new AssocDescriptor(paramAssocAnd2);
 		// Un and de 2 entradas
-		descAAnd3 = new AssocDescriptor((ParamAssocGate) paramAssocAnd3);
+		descAAnd3 = new AssocDescriptor(paramAssocAnd3);
 		// Un and de 2 entradas
-		descAAnd4 = new AssocDescriptor((ParamAssocGate) paramAssocAnd4);
+		descAAnd4 = new AssocDescriptor(paramAssocAnd4);
 		// Un and de 2 entradas
-		descAOr2 = new AssocDescriptor((ParamAssocGate) paramAssocOr2);
+		descAOr2 = new AssocDescriptor(paramAssocOr2);
 		// Un and de 2 entradas
-		descAOr3 = new AssocDescriptor((ParamAssocGate) paramAssocOr3);
+		descAOr3 = new AssocDescriptor(paramAssocOr3);
 		// Un and de 2 entradas
-		descAOr4 = new AssocDescriptor((ParamAssocGate) paramAssocOr4);
+		descAOr4 = new AssocDescriptor(paramAssocOr4);
 		// Un and de 2 entradas
 
 		// Las compuertas
@@ -318,12 +284,6 @@ public class CreateMenu extends javax.swing.JFrame implements java.awt.event.Act
 		show();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (20/03/01 18:21:18)
-	 * 
-	 * @param event
-	 *            java.awt.event.ActionEvent
-	 */
 	public void actionPerformed(ActionEvent event) {
 		if (event.getSource() == button) {
 			createGateFile(iconNot, imageNot);
@@ -366,7 +326,7 @@ public class CreateMenu extends javax.swing.JFrame implements java.awt.event.Act
 				enc.close();
 				out.close();
 			} catch (Exception e) {
-				System.out.println(e);
+				e.printStackTrace();
 			}
 			System.out.println("Ready.");
 		} else if (event.getSource() == button2) {
@@ -374,18 +334,6 @@ public class CreateMenu extends javax.swing.JFrame implements java.awt.event.Act
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (22/03/01 16:57:58)
-	 * 
-	 * @param circuit
-	 *            circuit.Circuit
-	 * @param gate
-	 *            csim.Gate
-	 * @param image
-	 *            java.awt.Image
-	 * @param name
-	 *            java.lang.String
-	 */
 	public void createGateFile(IconGate icon, Image image) {
 		int width;
 		int height;
@@ -406,10 +354,6 @@ public class CreateMenu extends javax.swing.JFrame implements java.awt.event.Act
 			for (int x = 0; x < width; x++)
 				rgbImage[z++] = buffImage.getRGB(x, y);
 		System.out.println(rgbImage.length + " " + z);
-		/*
-		 * for (int i = 0; i < width * height; i++) { if (i % width == 0)
-		 * System.out.println(); System.out.print(rgbImage[i]); }
-		 */
 
 		// Ahora creamos su imagen
 		cl.alejo.jcsim.csim.gates.IconImage iconImage = new IconImage();
@@ -420,12 +364,6 @@ public class CreateMenu extends javax.swing.JFrame implements java.awt.event.Act
 		iconGateDesc.iconImage = iconImage;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (20/03/01 18:11:11)
-	 * 
-	 * @param args
-	 *            java.lang.String[]
-	 */
 	public static void main(String[] args) {
 		new CreateMenu();
 	}

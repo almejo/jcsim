@@ -1,22 +1,22 @@
 package cl.alejo.jcsim.window;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.io.File;
-
-import javax.swing.filechooser.FileFilter;
 
 import cl.alejo.jcsim.csim.simulation.FileUtils;
+
+import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 public class CircuitFilter extends FileFilter {
 	/**

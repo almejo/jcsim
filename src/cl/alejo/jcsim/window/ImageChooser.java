@@ -1,30 +1,27 @@
 package cl.alejo.jcsim.window;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.Image;
+
+import cl.alejo.jcsim.csim.gates.IconGateDescriptor;
+import cl.alejo.jcsim.csim.gates.IconImage;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
-
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import cl.alejo.jcsim.csim.gates.IconGateDescriptor;
-import cl.alejo.jcsim.csim.gates.IconImage;
 
 public class ImageChooser extends JFrame implements ActionListener {
 	// Botones
@@ -46,12 +43,6 @@ public class ImageChooser extends JFrame implements ActionListener {
 	// El filechooser
 	JFileChooser fileChooser = new JFileChooser();
 
-	/**
-	 * ImageChooser constructor comment.
-	 * 
-	 * @param title
-	 *            java.lang.String
-	 */
 	public ImageChooser(IconGateDescriptor gateDesc) {
 
 		// el titulo
@@ -61,7 +52,7 @@ public class ImageChooser extends JFrame implements ActionListener {
 		this.gateDesc = gateDesc;
 
 		// La imagen
-		this.image = ((IconGateDescriptor) gateDesc).image;
+		this.image = gateDesc.image;
 
 		// Agrego el canvas y la imagen
 		imgPanel.image = this.image;
@@ -90,12 +81,6 @@ public class ImageChooser extends JFrame implements ActionListener {
 		show();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (30/04/01 3:47:52)
-	 * 
-	 * @param event
-	 *            java.awt.event.ActionEvent
-	 */
 	public void actionPerformed(ActionEvent event) {
 		JButton button = (JButton) event.getSource();
 
@@ -113,9 +98,6 @@ public class ImageChooser extends JFrame implements ActionListener {
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (30/04/01 4:22:32)
-	 */
 	public void load() {
 		try {
 
@@ -138,14 +120,9 @@ public class ImageChooser extends JFrame implements ActionListener {
 			}
 		} catch (Exception e) {
 			System.out.println("Otra " + e);
-		} finally {
 		}
-		;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (30/04/01 4:23:05)
-	 */
 	public void setImage() {
 		int width;
 		int height;
@@ -162,9 +139,11 @@ public class ImageChooser extends JFrame implements ActionListener {
 		// Ahora recuperamos el rgb
 		int[] rgbImage = new int[width * height];
 		int z = 0;
-		for (int y = 0; y < height; y++)
-			for (int x = 0; x < width; x++)
+		for (int y = 0; y < height; y++) {
+			for (int x = 0; x < width; x++) {
 				rgbImage[z++] = buffImage.getRGB(x, y);
+			}
+		}
 		System.out.println(rgbImage.length + " " + z);
 
 		// Ahora creamos su imagen

@@ -1,24 +1,24 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
-
-import javax.swing.SwingUtilities;
 
 import cl.alejo.jcsim.csim.circuit.Circuit;
 import cl.alejo.jcsim.window.CircuitCanvas;
 import cl.alejo.jcsim.window.Window;
+
+import javax.swing.*;
+import java.awt.event.MouseEvent;
 
 public class StateInit extends State {
 
@@ -53,15 +53,6 @@ public class StateInit extends State {
 		return this;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/06/01 15:06:20)
-	 * 
-	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow
-	 * @param event
-	 *            java.awt.event.MouseEvent
-	 */
 	public State mouseDoubleClick(Window window, MouseEvent event) {
 
 		// Recupero el canvas
@@ -76,9 +67,9 @@ public class StateInit extends State {
 
 			// Si es el boton izquierdo
 			if (SwingUtilities.isLeftMouseButton(event)) {
-				if (circuit.peekV(x, y) || circuit.peekH(x, y))
+				if (circuit.peekV(x, y) || circuit.peekH(x, y)) {
 					circuit.disconnect(x, y);
-				else {
+				} else {
 					if (_iconTarget != null) {
 						if (button_modiff == MODIF_ALT)
 							circuit.delete(_iconTarget);
@@ -135,19 +126,19 @@ public class StateInit extends State {
 
 			// Y cambio el icono
 			switch (button_modiff) {
-			case MODIF_CONTROL:
-				if (window.getIconTarget() != null)
-					window.setCloneCursor();
-				break;
-			case MODIF_SHIFT:
-				window.setCloseDeleteCursor();
-				break;
-			default:
-				if (window.getIconTarget() != null)
-					window.setMoveCursor();
-				else
-					window.setConnectCursor();
-				break;
+				case MODIF_CONTROL:
+					if (window.getIconTarget() != null)
+						window.setCloneCursor();
+					break;
+				case MODIF_SHIFT:
+					window.setCloseDeleteCursor();
+					break;
+				default:
+					if (window.getIconTarget() != null)
+						window.setMoveCursor();
+					else
+						window.setConnectCursor();
+					break;
 			}
 		}
 		return this;

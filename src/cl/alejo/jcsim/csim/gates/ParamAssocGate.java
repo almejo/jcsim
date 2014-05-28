@@ -1,16 +1,14 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
  * jcsim
- * 
+ * <p/>
  * Created on Jul 17, 2004
- * 
+ * <p/>
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- * 
  */
 public class ParamAssocGate extends GateParameters {
 
@@ -20,16 +18,10 @@ public class ParamAssocGate extends GateParameters {
 
 	int[][] behavior;
 
-	/**
-	 * ParamFFData constructor comment.
-	 */
 	public ParamAssocGate() {
 		super();
 	}
 
-	/**
-	 * ParamFFData constructor comment.
-	 */
 	public ParamAssocGate(int delay, int pinCount, int[][] behavior) {
 		super();
 		this.behavior = behavior;

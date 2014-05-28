@@ -1,20 +1,21 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
 
 import cl.alejo.jcsim.window.Window;
+
+import java.awt.event.MouseEvent;
 
 public class StateConnectWires extends State {
 	/**
@@ -62,14 +63,6 @@ public class StateConnectWires extends State {
 		return this;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/06/01 14:49:41)
-	 * 
-	 * @param window
-	 *            jcsimwindow.JCSimWindow
-	 * @param event
-	 *            java.awt.event.MouseEvent
-	 */
 	public State mouseDoubleClick(Window window, MouseEvent event) {
 		pointDrop = getCoords(winSrc, winDrop, event.getX(), event.getY());
 
@@ -96,12 +89,10 @@ public class StateConnectWires extends State {
 	/**
 	 * Evento invocado cuando el mouse entra a una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseEntered(Window window, MouseEvent event) {
 
@@ -119,12 +110,10 @@ public class StateConnectWires extends State {
 	/**
 	 * Evento invocado cuando el mouse sale de una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseExited(Window window, MouseEvent event) {
 		// Ponemos el dropTarget en el fuente

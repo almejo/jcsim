@@ -1,29 +1,28 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-
-import java.awt.Dimension;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Point2D;
-import java.awt.image.BufferedImage;
 
 import cl.alejo.jcsim.csim.circuit.Box;
 import cl.alejo.jcsim.csim.circuit.Circuit;
 import cl.alejo.jcsim.csim.circuit.Point;
 import cl.alejo.jcsim.csim.dom.Gate;
 import cl.alejo.jcsim.csim.dom.Pin;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.awt.image.BufferedImage;
 
 public class IconGate extends Box {
 
@@ -40,16 +39,10 @@ public class IconGate extends Box {
 
 	protected AffineTransform transTranslate = new AffineTransform();
 
-	/**
-	 * IconGate constructor comment.
-	 */
 	public IconGate() {
 		super();
 	}
 
-	/**
-	 * IconGate constructor comment.
-	 */
 	public IconGate(Gate gate) {
 		super();
 
@@ -62,45 +55,20 @@ public class IconGate extends Box {
 		this.transTranslate.setToIdentity();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/04/01 18:33:56)
-	 * 
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public void apply(int x, int y) {
 		// Y Aplicamos el click en el lugar adecuado
 		Point point = toGateCoords(x, y);
 		gate.apply(point._x, point._y);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/05/01 18:07:32)
-	 */
 	public void clean() {
 		gate.clean();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (28/06/01 14:54:25)
-	 * 
-	 * @return gates.IconGate
-	 */
 	public IconGate compile() {
 		return make();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/04/01 18:26:21)
-	 * 
-	 * @return boolean
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public boolean contains(int x, int y) {
 		// El centro
 		Point pointA = getCenter();
@@ -117,12 +85,6 @@ public class IconGate extends Box {
 		return super.contains(pointB._x, pointB._y);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 3:20:41)
-	 * 
-	 * @param gr
-	 *            java.awt.Graphics2D
-	 */
 	public void drawGate(Graphics2D gr) {
 
 		// Rescatamos el descriptor de la compuerta y lo usamos para pintar
@@ -132,42 +94,21 @@ public class IconGate extends Box {
 		gateDesc.drawGate(gr, this, 0, 0);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/04/01 17:23:32)
-	 * 
-	 * @return csim.Pin
-	 * @param thePin
-	 *            int
-	 */
 	public Pin getPin(int thePin) {
 		return gate.getPin(thePin);
 	}
 
-	/**
-	 * devuelve la posicion de un pin con relaciona una compuerta. Creation
-	 * date: (16/07/01 12:15:07)
-	 * 
-	 * @return circuit.Point
-	 * @param pinId
-	 *            int
-	 */
 	public Point getPinPos(int pinId) {
 		return transformedPoint(getPointPin()[pinId]);
 	}
 
-	/**
-	 * devuelve el arreglo de las posiones de los pines de la compuerta.
-	 * Creation date: (12/04/01 17:35:56)
-	 * 
-	 * @return circuit.Point[]
-	 */
 	public Point[] getPointPin() {
 		return gate.getGateDescriptor().pointPin;
 	}
 
 	/**
 	 * el tama???o del icono Creation date: (27/03/01 16:57:33)
-	 * 
+	 *
 	 * @return java.awt.Dimension
 	 */
 	public Dimension getRotatedSize() {
@@ -182,11 +123,6 @@ public class IconGate extends Box {
 		return new Dimension((int) Math.abs(p.getX()), (int) Math.abs(p.getY()));
 	}
 
-	/**
-	 * el tama???o del icono Creation date: (27/03/01 16:57:33)
-	 * 
-	 * @return java.awt.Dimension
-	 */
 	public Dimension getSize() {
 		try {
 			return gate.getGateDescriptor().getSize();
@@ -196,9 +132,6 @@ public class IconGate extends Box {
 		return null;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (26/06/01 23:28:21)
-	 */
 	public IconGate make() {
 		try {
 			// Creamos uno nuevo
@@ -209,9 +142,6 @@ public class IconGate extends Box {
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (26/06/01 23:28:21)
-	 */
 	public IconGate make(Circuit circuit) {
 		try {
 			// Creamos uno nuevo
@@ -237,12 +167,11 @@ public class IconGate extends Box {
 	}
 
 	/**
-	 * Movemos la compuerta Creation date: (06/04/01 13:32:17)
-	 * 
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
+	 * Movemos la compuerta
+	 * Creation date: (06/04/01 13:32:17)
+	 *
+	 * @param x int
+	 * @param y int
 	 */
 	public void moveTo(int x, int y) {
 		Dimension dim = this.getSize();
@@ -253,27 +182,22 @@ public class IconGate extends Box {
 	}
 
 	/**
-	 * Pintamos la compuerta enla pantalla Creation date: (09/01/01 17:19:36)
-	 * 
-	 * @param gr
-	 *            java.awt.Graphics2D
+	 * Pintamos la compuerta enla pantalla
+	 * Creation date: (09/01/01 17:19:36)
+	 *
+	 * @param gr java.awt.Graphics2D
 	 */
 	public void paint(Graphics2D gr) {
 		gate.getGateDescriptor().paint(gr, this);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/04/01 17:32:48)
-	 * 
-	 * @return int
-	 */
 	public int pinCount() {
 		return gate.pinCount();
 	}
 
 	/**
 	 * Entrego una imagen de la compuerta, la imagen que se arrastra
-	 * 
+	 * <p/>
 	 * Creation date: (23/04/01 4:07:31)
 	 */
 	public BufferedImage printImage() {
@@ -313,7 +237,7 @@ public class IconGate extends Box {
 	}
 
 	/**
-	 * Recalculamosla transformacion de la compuerta Creation date: (06/04/01
+	 * Recalculamos la transformacion de la compuerta Creation date: (06/04/01
 	 * 12:01:25)
 	 */
 	public void recalculateTransformation() {
@@ -325,7 +249,7 @@ public class IconGate extends Box {
 	}
 
 	/**
-	 * Recalculamosla transformacion de la compuerta Creation date: (06/04/01
+	 * Recalculamos la transformacion de la compuerta Creation date: (06/04/01
 	 * 12:01:25)
 	 */
 	public void recalculateTransformation(int x, int y) {
@@ -337,9 +261,6 @@ public class IconGate extends Box {
 		transform.concatenate(transRotate);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/04/01 17:44:02)
-	 */
 	public void rotate() {
 		// primero lo desactivo
 		gate.getCircuit().desactivate(this);
@@ -349,9 +270,6 @@ public class IconGate extends Box {
 		gate.getCircuit().activate(this);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/04/01 17:44:02)
-	 */
 	public void rotate(int x, int y) {
 		// primero lo desactivo
 		gate.getCircuit().desactivate(this);
@@ -363,15 +281,6 @@ public class IconGate extends Box {
 		gate.getCircuit().activate(this);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (17/04/01 14:01:24)
-	 * 
-	 * @return circuit.Point
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public Point rotatedPoint(int x, int y) {
 		java.awt.geom.Point2D.Double p2d = new java.awt.geom.Point2D.Double(x, y);
 		try {
@@ -383,15 +292,6 @@ public class IconGate extends Box {
 		return new Point((int) p2d.getX(), (int) p2d.getY());
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (17/04/01 14:01:24)
-	 * 
-	 * @return circuit.Point
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public Point rotatedPointInv(int x, int y) {
 		java.awt.geom.Point2D.Double p2d = new java.awt.geom.Point2D.Double(x, y);
 		try {
@@ -445,7 +345,7 @@ public class IconGate extends Box {
 
 		// Cambio la transformacion de traslacion
 		Point ptC = new cl.alejo.jcsim.csim.circuit.Point((int) this.transTranslate.getTranslateX(),
-			(int) transTranslate.getTranslateY());
+				(int) transTranslate.getTranslateY());
 		Point pt = new Point(_x - ptC._x, _y - ptC._y);
 		Point ptRot = new cl.alejo.jcsim.csim.circuit.Point(ptC._x + pt._x, ptC._y + pt._y);
 		Point2D.Double p2d = new Point2D.Double(-pt._x, -pt._y);
@@ -460,11 +360,9 @@ public class IconGate extends Box {
 
 	/**
 	 * Calcula la transformada de translacion Creation date: (06/04/01 13:11:08)
-	 * 
-	 * @param x
-	 *            double
-	 * @param y
-	 *            double
+	 *
+	 * @param x double
+	 * @param y double
 	 */
 	public void setTranslate(double x, double y) {
 		// Cambio la transformacion
@@ -475,15 +373,6 @@ public class IconGate extends Box {
 		recalculateTransformation();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (21/06/01 18:38:35)
-	 * 
-	 * @return circuit.Point
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public Point toGateCoords(int x, int y) {
 
 		// TRansformo el punto a coordenadas de la compuerta
@@ -497,18 +386,10 @@ public class IconGate extends Box {
 		return pointC;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (14/05/01 17:24:21)
-	 * 
-	 * @return java.lang.String
-	 */
 	public String toString() {
 		return getClass().getName();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (17/04/01 14:24:26)
-	 */
 	public Point transformedPoint(int x, int y) {
 		// Primero un punto2d
 		java.awt.geom.Point2D.Double p2d = new java.awt.geom.Point2D.Double(x, y);
@@ -516,9 +397,6 @@ public class IconGate extends Box {
 		return new Point((int) p2d.getX(), (int) p2d.getY());
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (17/04/01 14:24:26)
-	 */
 	public Point transformedPoint(Point p) {
 		// Primero un punto2d
 		java.awt.geom.Point2D.Double p2d = new java.awt.geom.Point2D.Double(p._x, p._y);

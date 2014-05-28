@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.csim.gates;
 
@@ -40,12 +40,6 @@ public class ClkPin extends Pin implements Cloneable {
 		programOut(((ParamClk) _gate.getParameters()).state, 0);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (10/05/01 20:27:58)
-	 * 
-	 * @param circuit
-	 *            circuit.Circuit
-	 */
 	public void setCircuit(Circuit circuit) {
 
 		// Ponemos el circuito

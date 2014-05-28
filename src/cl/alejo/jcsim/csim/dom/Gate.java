@@ -1,24 +1,24 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.csim.dom;
-
-import java.io.Serializable;
-import java.util.List;
 
 import cl.alejo.jcsim.csim.circuit.Box;
 import cl.alejo.jcsim.csim.circuit.Circuit;
 import cl.alejo.jcsim.csim.gates.GateDescriptor;
 import cl.alejo.jcsim.csim.gates.GateParameters;
+
+import java.io.Serializable;
+import java.util.List;
 
 abstract public class Gate implements Serializable, Cloneable {
 
@@ -33,11 +33,9 @@ abstract public class Gate implements Serializable, Cloneable {
 	/**
 	 * Este metodo solo sirve para que lo ejecute la compuerta template... ella
 	 * es la unica que lo implementa
-	 * 
-	 * @param Circuit
-	 *            circuit El circuito donde debe buscar
-	 * @param Box
-	 *            box
+	 *
+	 * @param circuit Circuit  El circuito donde debe buscar
+	 * @param box     Box
 	 */
 	public Gate compile(Circuit circuit, Box box) {
 		circuit.getClass();
@@ -48,11 +46,11 @@ abstract public class Gate implements Serializable, Cloneable {
 	/**
 	 * El metodo que se invocara cuando uno hace "doble click" en una compuerta
 	 * este metodo se usa para invocar acciones sobre la compuerta
-	 * 
+	 * <p/>
 	 * Recibe la posicion donde ocurre el evento realtivo a la compuerta
-	 * 
-	 * @param int x La posicion horizontal del evento
-	 * @param int y La posicion vertical del evento
+	 *
+	 * @param x int  La posicion horizontal del evento
+	 * @param y int  La posicion vertical del evento
 	 */
 	public abstract void apply(int x, int y);
 
@@ -86,9 +84,8 @@ abstract public class Gate implements Serializable, Cloneable {
 	/**
 	 * Le asocia un nuevo circuito a esta compuerta y luego asocia este circuito
 	 * a los pines del Gate
-	 * 
-	 * @param circuit
-	 *            El nuevo circuito del
+	 *
+	 * @param circuit El nuevo circuito del
 	 */
 	public void actualizeCircuit(Circuit circuit) {
 		_circuit = circuit;

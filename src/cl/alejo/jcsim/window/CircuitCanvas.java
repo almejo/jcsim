@@ -1,27 +1,24 @@
 package cl.alejo.jcsim.window;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.geom.AffineTransform;
-
-import javax.swing.JPanel;
 
 import cl.alejo.jcsim.csim.circuit.Box;
 import cl.alejo.jcsim.csim.circuit.Circuit;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 
 public class CircuitCanvas extends JPanel {
 
@@ -58,9 +55,6 @@ public class CircuitCanvas extends JPanel {
 	Color colorWireOn = Color.red;
 	Color colorWireOff = Color.black;
 
-	/**
-	 * CircCanvas constructor comment.
-	 */
 	public CircuitCanvas(Circuit circuit, Window window) {
 		super();
 		this.circuit = circuit;
@@ -117,12 +111,6 @@ public class CircuitCanvas extends JPanel {
 		this.circuit.paint(g2, boxZoomed);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (19/09/01 16:44:23)
-	 * 
-	 * @param gr
-	 *            java.awt.Graphics2D
-	 */
 	public void drawGrid(Graphics2D gr) {
 		gr.setColor(Color.lightGray);
 
@@ -135,31 +123,29 @@ public class CircuitCanvas extends JPanel {
 				gr.setColor(Color.darkGray);
 				gr.drawLine(0, i, width, i);
 				gr.setColor(Color.lightGray);
-			} else
+			} else {
 				gr.drawLine(0, i, width, i);
+			}
 		}
 		for (int i = yGridOrigin; i < width; i += Circuit.GRIDSIZE)
 			if ((i % 80) == 0) {
 				gr.setColor(Color.darkGray);
 				gr.drawLine(i, 0, i, height);
 				gr.setColor(Color.lightGray);
-			} else
+			} else {
 				gr.drawLine(i, 0, i, height);
+			}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (18/01/01 20:59:08)
-	 */
 	public Box extent() {
 		return circuit.getExtent();
 	}
 
 	/**
 	 * Devuelve x en coordenadas del circuito Creation date: (07/04/01 15:54:06)
-	 * 
+	 *
+	 * @param x int
 	 * @return int
-	 * @param x
-	 *            int
 	 */
 	public int getTransformedX(int x) {
 		return (int) (((double) x) / zoom + boxViewport.getXi());
@@ -167,20 +153,14 @@ public class CircuitCanvas extends JPanel {
 
 	/**
 	 * Devuelve x en coordenadas del circuito Creation date: (07/04/01 15:54:21)
-	 * 
+	 *
+	 * @param y int
 	 * @return int
-	 * @param y
-	 *            int
 	 */
 	public int getTransformedY(int y) {
 		return (int) (((double) y) / zoom + boxViewport.getYi());
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (18/01/01 21:02:08)
-	 * 
-	 * @return circuit.Box
-	 */
 	public Box getViewport() {
 		return boxViewport;
 	}
@@ -233,45 +213,22 @@ public class CircuitCanvas extends JPanel {
 
 	/**
 	 * Attachea un circuito a este canvas Creation date: (26/03/01 20:52:23)
-	 * 
-	 * @param circuit
-	 *            circuit.Circuit - El circuito
+	 *
+	 * @param circuit circuit.Circuit - El circuito
 	 */
 	public void setCircuit(Circuit circuit) {
 		this.circuit = circuit;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (04/10/01 2:17:46)
-	 * 
-	 * @param active
-	 *            boolean
-	 */
 	public void setGrid(boolean flag) {
 		showGrid = flag;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/01/01 22:53:25)
-	 * 
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public void setViewport(int xi, int yi, int xf, int yf) {
 		this.boxViewport
-			.set(Circuit.gridTrunc(xi), Circuit.gridTrunc(yi), Circuit.gridTrunc(xf), Circuit.gridTrunc(yf));
+				.set(Circuit.gridTrunc(xi), Circuit.gridTrunc(yi), Circuit.gridTrunc(xf), Circuit.gridTrunc(yf));
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/01/01 22:57:28)
-	 * 
-	 * @param xi
-	 *            int
-	 * @param yi
-	 *            int
-	 */
 	public void setViewportCenter(int xi, int yi) {
 
 		// Los anchos para los desplazamientos
@@ -291,14 +248,6 @@ public class CircuitCanvas extends JPanel {
 
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (09/04/01 19:18:07)
-	 * 
-	 * @param x
-	 *            int
-	 * @param y
-	 *            int
-	 */
 	public void setViewportCorner(int x, int y) {
 
 		// La caja
@@ -315,33 +264,20 @@ public class CircuitCanvas extends JPanel {
 		calculateGrid();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/01/01 22:42:26)
-	 * 
-	 * @param y
-	 *            int
-	 */
 	public void setViewportHeight(int y) {
 		// La caja
 		boxViewport.setYf(boxViewport.getYi() + Circuit.gridTrunc(y));
 
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (16/01/01 22:42:06)
-	 * 
-	 * @param x
-	 *            int
-	 */
 	public void setViewportWidth(int x) {
 		boxViewport.setXf(boxViewport.getXi() + Circuit.gridTrunc(x));
 	}
 
 	/**
 	 * Cambiamos el zoom del circuito Creation date: (06/04/01 12:14:06)
-	 * 
-	 * @param zoom
-	 *            double
+	 *
+	 * @param zoom double
 	 */
 	public void setZoom(double zoom) {
 

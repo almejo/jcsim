@@ -1,29 +1,24 @@
 package cl.alejo.jcsim.window;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import cl.alejo.jcsim.csim.dom.ConfigurableGate;
 import cl.alejo.jcsim.csim.dom.Gate;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class SetupWindow extends JFrame implements ActionListener {
 	JPanel panelField = new JPanel();
@@ -31,7 +26,7 @@ public class SetupWindow extends JFrame implements ActionListener {
 	JTextField[] fldParam;
 	JLabel[] labelParamName;
 	JButton buttOk;
-	JButton buttCancel;
+	JButton cancelButton;
 
 	// La compuerta a modificar
 	Gate gate;
@@ -40,12 +35,6 @@ public class SetupWindow extends JFrame implements ActionListener {
 	// El icono
 	ImageIcon imgIcon = new ImageIcon("images/Diagram.jpg");
 
-	/**
-	 * SetupWindow constructor comment.
-	 * 
-	 * @param title
-	 *            java.lang.String
-	 */
 	public SetupWindow(Gate gate, String title, String[] txtParams, String[] current) {
 		super(title);
 
@@ -71,9 +60,9 @@ public class SetupWindow extends JFrame implements ActionListener {
 		// Los botones
 		panelButtons.setLayout(new java.awt.GridLayout(0, 2));
 		panelButtons.add((buttOk = new JButton("Ok")));
-		panelButtons.add((buttCancel = new JButton("Cancel")));
+		panelButtons.add((cancelButton = new JButton("Cancel")));
 		buttOk.addActionListener(this);
-		buttCancel.addActionListener(this);
+		cancelButton.addActionListener(this);
 
 		// El panel del icono
 		JLabel labelIcon = new JLabel(imgIcon);
@@ -84,12 +73,6 @@ public class SetupWindow extends JFrame implements ActionListener {
 		getContentPane().add("South", panelButtons);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (24/04/01 8:08:49)
-	 * 
-	 * @param event
-	 *            java.awt.event.ActionEvent
-	 */
 	public void actionPerformed(ActionEvent event) {
 
 		// Rescato el boton.
@@ -106,12 +89,13 @@ public class SetupWindow extends JFrame implements ActionListener {
 			}
 
 			// la configuro si es que todavia existe
-			if (gate != null)
+			if (gate != null) {
 				((ConfigurableGate) gate).fillParams(newParams);
+			}
 
 			// Y me voy
 			dispose();
-		} else if (button == buttCancel) {
+		} else if (button == cancelButton) {
 			dispose();
 		}
 	}

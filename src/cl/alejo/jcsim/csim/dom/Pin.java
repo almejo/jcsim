@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Luis Mateu
- *  
+ *
  */
 package cl.alejo.jcsim.csim.dom;
 
@@ -40,9 +40,8 @@ public class Pin extends Link implements java.io.Serializable {
 
 	/**
 	 * Conecta un pin a la lista que contiene a este
-	 * 
-	 * @param pin
-	 *            csim.Pin El pin a conectar
+	 *
+	 * @param pin csim.Pin El pin a conectar
 	 */
 	public final void connect(Pin pin) {
 		join(pin);
@@ -71,17 +70,18 @@ public class Pin extends Link implements java.io.Serializable {
 			// Si el pin tiene un valor de salida
 			if (pin._outValue != THREE_STATE) {
 				// Si el pin esta programado
-				if (!pin._event.isProgrammed())
-
+				if (!pin._event.isProgrammed()) {
 					// Si encontramos un valor que difiera del
 					// valor del resto de los pines
 					if (hotValue != THREE_STATE && hotValue != pin._outValue) {
 						System.err.println("Corto-circuito!");
 						break;
-					} else
+					} else {
 						hotValue = pin._outValue;
-				else
+					}
+				} else {
 					value = pin._outValue;
+				}
 			}
 			pin = (Pin) pin.next();
 		} while (pin != this);
@@ -102,8 +102,9 @@ public class Pin extends Link implements java.io.Serializable {
 			if (lineVal != pin._inValue && pin._outValue == THREE_STATE && pin._programedValue == THREE_STATE) {
 				pin._inValue = lineVal;
 				pin.hasChanged();
-			} else
+			} else {
 				pin._inValue = lineVal;
+			}
 
 			// Avanzamos al siguiente
 			pin = (Pin) pin.next();
@@ -112,7 +113,6 @@ public class Pin extends Link implements java.io.Serializable {
 
 	/**
 	 * Obtiene el valor de entrada de un pin.
-	 * 
 	 */
 	public final byte getInValue() {
 		return _inValue;
@@ -127,44 +127,43 @@ public class Pin extends Link implements java.io.Serializable {
 
 	/**
 	 * Programa un cambio en la salida en <i>delay</i> unidades de tiempo
-	 * 
-	 * @param delay
-	 *            Cuanto tiempo mas para que ocurra
-	 * 
+	 *
+	 * @param delay Cuanto tiempo mas para que ocurra
 	 */
 	public final void programOut(byte newValue, int delay) {
 		if (_circuit == null)
 			return;
 		if (_programedValue != newValue) {
-			if (_event == null)
+			if (_event == null) {
 				_event = new PinEvent(this, _circuit.getAgenda());
+			}
 			_programedValue = newValue;
-			if (_programedValue != _outValue)
+			if (_programedValue != _outValue) {
 				_event.program(delay);
+			}
 		}
 	}
 
 	/**
 	 * Este metodo se hace necesario para poder copiar un icono de un circuito a
 	 * otro... Ebemos primero remover todo rastro del circuito antiguo
-	 * 
-	 * @param circuit
-	 *            circuit.Circuit
+	 *
+	 * @param circuit circuit.Circuit
 	 */
 	public void setCircuit(Circuit circuit) {
 		_circuit = circuit;
 
-		if (_event != null)
+		if (_event != null) {
 			_event.cancel();
+		}
 	}
 
 	/**
 	 * Le asociamos un gate Esto es porque cuando se clona un pin, este queda
 	 * asociado al gate original. Asi esta funcion debe ser llamada
 	 * inmediatamente despues del clone();
-	 * 
-	 * @param gate
-	 *            csim.Gate La compuerta nueva del pin
+	 *
+	 * @param gate csim.Gate La compuerta nueva del pin
 	 */
 	public void setGate(Gate gate) {
 		_gate = gate;

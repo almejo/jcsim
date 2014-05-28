@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Luis Mateu
- *  
+ *
  */
 package cl.alejo.jcsim.csim.simulation;
 
@@ -25,7 +25,7 @@ public class Link implements Serializable {
 
 	/**
 	 * Clona un link... este estara solito :)
-	 * 
+	 *
 	 * @return java.lang.Object
 	 */
 	public Object clone() {
@@ -45,15 +45,16 @@ public class Link implements Serializable {
 	 */
 	public void delete(Link link) {
 		Link prevlink = findPrevious(link);
-		if (prevlink == null)
+		if (prevlink == null) {
 			Kit.Error("Link nulo", link);
+		}
 		prevlink._next = link._next;
 		link._next = link;
 	}
 
 	/**
 	 * Busca el predecesor en una lista.
-	 * 
+	 *
 	 * @return el link cuyo sucesor es ``this''.
 	 */
 	public Link findPrevious(Link link) {
@@ -82,7 +83,7 @@ public class Link implements Serializable {
 
 	/**
 	 * Calcula el largo de una lista circular.
-	 * 
+	 *
 	 * @return el numero de links en la lista circular.
 	 */
 	public int length() {
@@ -97,7 +98,7 @@ public class Link implements Serializable {
 
 	/**
 	 * Entrega el siguiente link en una lista circular.
-	 * 
+	 *
 	 * @return el sucesor en esta lista.
 	 */
 	public Link next() {

@@ -1,31 +1,27 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- * 
+ *
  * Un panel que tiene los nombres de las entradas de un diagrama de tiempo
- *  
+ *
  */
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics2D;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 
 public class NameCanvas extends JPanel implements MouseListener {
 
@@ -43,23 +39,12 @@ public class NameCanvas extends JPanel implements MouseListener {
 		addMouseListener(this);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 7:32:13)
-	 * 
-	 * @param label
-	 *            java.lang.String
-	 */
 	public void add(String label) {
 
 		// Agrego el label a la lista
 		listNames.add(label);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 7:34:25)
-	 * 
-	 * @return java.awt.Dimension
-	 */
 	public Dimension getPreferredSize() {
 
 		// Calculo el alto
@@ -69,12 +54,12 @@ public class NameCanvas extends JPanel implements MouseListener {
 		int widht = 0;
 
 		// Recorro y busco el mayor
-		Iterator iter = listNames.iterator();
-		while (iter.hasNext()) {
-			String name = (String) iter.next();
+		for (Object listName : listNames) {
+			String name = (String) listName;
 			int newWidht = name.length() * WIDTH_DELTA;
-			if (widht < newWidht)
+			if (widht < newWidht) {
 				widht = newWidht;
+			}
 		}
 		if (widht < 50) {
 			widht = 50;
@@ -86,12 +71,6 @@ public class NameCanvas extends JPanel implements MouseListener {
 		return new Dimension(widht, height);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 7:45:38)
-	 * 
-	 * @param gr
-	 *            java.awt.Graphics2D
-	 */
 	public void paint(java.awt.Graphics gr1d) {
 		Graphics2D gr = (Graphics2D) gr1d;
 
@@ -108,12 +87,6 @@ public class NameCanvas extends JPanel implements MouseListener {
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 7:34:25)
-	 * 
-	 * @return java.awt.Dimension
-	 */
-
 	public void mouseClicked(MouseEvent e) {
 		if (e.getClickCount() < 2)
 			return;
@@ -121,8 +94,8 @@ public class NameCanvas extends JPanel implements MouseListener {
 
 			int n = e.getY() / HEIGHT_DELTA;
 			String name = (String) listNames.get(n);
-			String newName = (String) JOptionPane.showInputDialog((Component) getParent(), "Ingrese el nuevo label",
-				name);
+			String newName = JOptionPane.showInputDialog(getParent(), "Ingrese el nuevo label",
+					name);
 			replaceName(n, newName);
 			setSize(getMinimumSize());
 			repaint();

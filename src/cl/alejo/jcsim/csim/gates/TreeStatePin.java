@@ -1,14 +1,14 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 package cl.alejo.jcsim.csim.gates;
 
@@ -23,9 +23,9 @@ public class TreeStatePin extends Pin {
 	}
 
 	public void hasChanged() {
-		System.out.println(((TreeState) _gate).getPin()[0].getInValue());
-		byte newVal = computeTreeState(((TreeState) _gate).getPin()[0].getInValue());
-		((TreeState) _gate).getPin()[1].programOut(newVal, ((ParamTreeState) _gate.getParameters()).getDelay());
+		System.out.println(_gate.getPin()[0].getInValue());
+		byte newVal = computeTreeState(_gate.getPin()[0].getInValue());
+		_gate.getPin()[1].programOut(newVal, ((ParamTreeState) _gate.getParameters()).getDelay());
 	}
 
 	private byte computeTreeState(byte b) {

@@ -1,20 +1,21 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
 
 import cl.alejo.jcsim.window.Window;
+
+import java.awt.event.MouseEvent;
 
 public class StateDragViewport extends State {
 	/**
@@ -36,9 +37,9 @@ public class StateDragViewport extends State {
 			// Cambio de coordenadas
 			pointDrop = getLocalCoords(winDrop, event.getX(), event.getY());
 			cl.alejo.jcsim.csim.circuit.Point pointDesp = new cl.alejo.jcsim.csim.circuit.Point(-pointDrop._x
-				+ pointSrc._x, -pointDrop._y + pointSrc._y);
+					+ pointSrc._x, -pointDrop._y + pointSrc._y);
 			cl.alejo.jcsim.csim.circuit.Point pointCorner = new cl.alejo.jcsim.csim.circuit.Point(pointDesp._x
-				+ winDrop.getCanvas().boxViewport.getXi(), pointDesp._y + winDrop.getCanvas().boxViewport.getYi());
+					+ winDrop.getCanvas().boxViewport.getXi(), pointDesp._y + winDrop.getCanvas().boxViewport.getYi());
 			// circuit.Point point = new circuit.Point(pointDrop.x -
 			// winDrop.canvas.boxViewport.xi, pointDrop.y -
 			// winDrop.canvas.boxViewport.yi);
@@ -47,7 +48,7 @@ public class StateDragViewport extends State {
 			System.out.println("PointSrc= " + pointSrc);
 			System.out.println("PointDrop = " + pointDrop);
 			System.out.println("Corner = " + winDrop.getCanvas().boxViewport.getXi() + ","
-				+ winDrop.getCanvas().boxViewport.getYi());
+					+ winDrop.getCanvas().boxViewport.getYi());
 			System.out.println("PointDesp = " + pointDesp);
 			System.out.println("PointCorner= " + pointCorner);
 
@@ -68,12 +69,10 @@ public class StateDragViewport extends State {
 	/**
 	 * Evento invocado cuando el mouse entra a una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseEntered(Window window, MouseEvent event) {
 		/*
@@ -95,12 +94,10 @@ public class StateDragViewport extends State {
 	/**
 	 * Evento invocado cuando el mouse sale de una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseExited(Window window, MouseEvent event) {
 		/*

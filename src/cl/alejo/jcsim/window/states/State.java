@@ -1,24 +1,25 @@
 package cl.alejo.jcsim.window.states;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
-import java.awt.event.MouseEvent;
 
 import cl.alejo.jcsim.csim.circuit.Circuit;
 import cl.alejo.jcsim.csim.circuit.Point;
 import cl.alejo.jcsim.csim.circuit.SelectionContainer;
 import cl.alejo.jcsim.csim.gates.IconGate;
 import cl.alejo.jcsim.window.Window;
+
+import java.awt.event.MouseEvent;
 
 public abstract class State {
 
@@ -30,13 +31,13 @@ public abstract class State {
 	protected final static State STATE_DRAG_SELECTION = new StateDragSelection();
 
 	protected static cl.alejo.jcsim.csim.circuit.Point pointSrc = null; // El
-																		// inicio
-																		// del
-																		// dnd
+	// inicio
+	// del
+	// dnd
 	protected static cl.alejo.jcsim.csim.circuit.Point pointDrop = null; // El
-																			// final
-																			// del
-																			// dnd
+	// final
+	// del
+	// dnd
 	protected static int button_modiff = 0; // El modificador
 	protected static Circuit circSrc = null; // El circuito fuente
 	protected static Circuit circDrop = null; // El circuito del drop
@@ -56,7 +57,7 @@ public abstract class State {
 
 	/**
 	 * Al hacer drag en este estado Creation date: (03/04/01 16:40:39)
-	 * 
+	 *
 	 * @return jcsimwindow.State
 	 */
 	public State drag(Window window, MouseEvent event) {
@@ -66,12 +67,10 @@ public abstract class State {
 	/**
 	 * Convierte coordenadas de la ventana fuente a coordenadas de del circuito
 	 * en la ventana destino Creation date: (01/06/01 0:12:16)
-	 * 
+	 *
+	 * @param winSrc  jcsimwindow.JCSimWindow ventana fuente
+	 * @param winDrop jcsimwindow.JCSimWindow ventana destino
 	 * @return circuit.Point
-	 * @param winSrc
-	 *            jcsimwindow.JCSimWindow ventana fuente
-	 * @param winDrop
-	 *            jcsimwindow.JCSimWindow ventana destino
 	 */
 	public Point getCoords(Window winSrc, Window winDrop, int _x, int _y) {
 
@@ -99,12 +98,11 @@ public abstract class State {
 	/**
 	 * Convierte coordenadas de la ventana fuente a coordenadas de del circuito
 	 * en la ventana destino Creation date: (01/06/01 0:12:16)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow
+	 * @param x      int
+	 * @param y      int
 	 * @return circuit.Point
-	 * @param winSrc
-	 *            jcsimwindow.JCSimWindow ventana fuente
-	 * @param winDrop
-	 *            jcsimwindow.JCSimWindow ventana destino
 	 */
 	public Point getLocalCoords(Window window, int x, int y) {
 
@@ -118,10 +116,9 @@ public abstract class State {
 
 	/**
 	 * DEvuelve el modificador del mouse Creation date: (31/05/01 20:47:00)
-	 * 
+	 *
+	 * @param event java.awt.event.MouseEvent
 	 * @return int
-	 * @param event
-	 *            java.awt.event.MouseEvent
 	 */
 	public int getModif(MouseEvent event) {
 		if (event.isControlDown())
@@ -136,12 +133,10 @@ public abstract class State {
 	/**
 	 * DEvuelve el punto donde comienza el drag and drop en coordenadas del
 	 * circuito Creation date: (31/05/01 20:44:30)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow
+	 * @param event  java.awt.event.MouseEvent
 	 * @return circuit.Point
-	 * @param window
-	 *            jcsimwindow.JCSimWindow
-	 * @param event
-	 *            java.awt.event.MouseEvent
 	 */
 	public Point getSrcPoint(Window window, MouseEvent event) {
 		int x = cl.alejo.jcsim.csim.circuit.Circuit.gridTrunc(window.getCanvas().getTransformedX(event.getX()));
@@ -151,37 +146,19 @@ public abstract class State {
 		return new Point(x, y);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/06/01 14:49:41)
-	 * 
-	 * @param window
-	 *            jcsimwindow.JCSimWindow
-	 * @param event
-	 *            java.awt.event.MouseEvent
-	 */
 	public State mouseClick(Window window, MouseEvent event) {
 		return this;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (12/06/01 14:49:41)
-	 * 
-	 * @param window
-	 *            jcsimwindow.JCSimWindow
-	 * @param event
-	 *            java.awt.event.MouseEvent
-	 */
 	public State mouseDoubleClick(Window window, MouseEvent event) {
 		return this;
 	}
 
 	/**
 	 * Evento cuando se suelta el mouse Creation date: (05/04/01 17:32:43)
-	 * 
-	 * @param window
-	 *            jcsimwindow.JCSimWindow
-	 * @param event
-	 *            java.awt.event.MouseEvent
+	 *
+	 * @param window jcsimwindow.JCSimWindow
+	 * @param event  java.awt.event.MouseEvent
 	 */
 	public State mouseDown(Window window, MouseEvent event) {
 		return this;
@@ -190,12 +167,10 @@ public abstract class State {
 	/**
 	 * Evento invocado cuando el mouse entra a una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseEntered(Window window, MouseEvent event) {
 		return this;
@@ -204,12 +179,10 @@ public abstract class State {
 	/**
 	 * Evento invocado cuando el mouse sale de una ventana Creation date:
 	 * (31/05/01 17:47:27)
-	 * 
+	 *
+	 * @param window jcsimwindow.JCSimWindow la ventana que genero el evento
+	 * @param event  java.awt.event.MouseEvent el evento
 	 * @return jcsimwindow.State
-	 * @param window
-	 *            jcsimwindow.JCSimWindow la ventana que genero el evento
-	 * @param event
-	 *            java.awt.event.MouseEvent el evento
 	 */
 	public State mouseExited(Window window, MouseEvent event) {
 		return this;
@@ -222,11 +195,6 @@ public abstract class State {
 		return this;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (03/04/01 16:42:17)
-	 * 
-	 * @return jcsimwindow.State
-	 */
 	public State mouseUp(Window window, MouseEvent event) {
 		return this;
 	}

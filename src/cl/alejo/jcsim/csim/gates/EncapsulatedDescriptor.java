@@ -1,17 +1,18 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
+
 import cl.alejo.jcsim.csim.circuit.Circuit;
 import cl.alejo.jcsim.csim.dom.Gate;
 import cl.alejo.jcsim.csim.dom.Pin;
@@ -27,20 +28,10 @@ public class EncapsulatedDescriptor extends IconGateDescriptor {
 	// LA tabla con lo pines externos
 	int[][] connectOut;
 
-	/**
-	 * Insert the method's description here. Creation date: (26/06/01 22:55:40)
-	 */
 	public EncapsulatedDescriptor() {
 		params = new ParamVoid();
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (26/06/01 21:27:43)
-	 * 
-	 * @return csim.Gate
-	 * @param params
-	 *            gates.GateParameters
-	 */
 	public Gate make(Circuit circuit, GateParameters params) {
 
 		// Aqui debo crear una nueva compuerta encapsulada
@@ -66,7 +57,7 @@ public class EncapsulatedDescriptor extends IconGateDescriptor {
 		// Asocio el descriptor
 		chip.setGateDescriptor(this);
 
-		// Ahora reconecto todo
+		// Ahora reconecto
 		{
 			for (int i = 0; i < gateData.length; i++) {
 				// Primero recorro el arreglo de datos y parametros

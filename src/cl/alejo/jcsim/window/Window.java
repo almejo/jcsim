@@ -1,85 +1,41 @@
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
 
 // TODO externalizar todos los strings de esta clase
 package cl.alejo.jcsim.window;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Dimension;
-import java.awt.Point;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
-import java.awt.event.ComponentEvent;
-import java.awt.event.ComponentListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import cl.alejo.jcsim.csim.circuit.Box;
+import cl.alejo.jcsim.csim.circuit.Circuit;
+import cl.alejo.jcsim.csim.circuit.SelectionContainer;
+import cl.alejo.jcsim.csim.gates.IconGate;
+import cl.alejo.jcsim.window.action.*;
+import cl.alejo.jcsim.window.states.State;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InvalidClassException;
 
-import javax.swing.Action;
-import javax.swing.ButtonGroup;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollBar;
-import javax.swing.JToolBar;
-import javax.swing.KeyStroke;
-
-import cl.alejo.jcsim.csim.circuit.Box;
-import cl.alejo.jcsim.csim.circuit.Circuit;
-import cl.alejo.jcsim.csim.circuit.SelectionContainer;
-import cl.alejo.jcsim.csim.gates.IconGate;
-import cl.alejo.jcsim.window.action.ActionCloneWindow;
-import cl.alejo.jcsim.window.action.ActionCloseWindow;
-import cl.alejo.jcsim.window.action.ActionCopy;
-import cl.alejo.jcsim.window.action.ActionCut;
-import cl.alejo.jcsim.window.action.ActionLoadCircuit;
-import cl.alejo.jcsim.window.action.ActionNewCircuit;
-import cl.alejo.jcsim.window.action.ActionNewWindow;
-import cl.alejo.jcsim.window.action.ActionPaste;
-import cl.alejo.jcsim.window.action.ActionPauseSimulation;
-import cl.alejo.jcsim.window.action.ActionSaveAs;
-import cl.alejo.jcsim.window.action.ActionSaveCircuit;
-import cl.alejo.jcsim.window.action.ActionStartSimulation;
-import cl.alejo.jcsim.window.states.State;
-
 /**
  * La ventana donde correran los circuitos Creation date: (11/12/00 15:43:32)
- * 
+ *
  * @author:
  */
 public class Window extends JFrame implements ActionListener, ItemListener, AdjustmentListener, ComponentListener,
-	MouseListener, MouseMotionListener {
+		MouseListener, MouseMotionListener {
 
 	private static final KeyStroke ACCELERATOR_COPY = KeyStroke.getKeyStroke(KeyEvent.VK_C, KeyEvent.CTRL_DOWN_MASK);
 	private static final KeyStroke ACCELERATOR_PASTE = KeyStroke.getKeyStroke(KeyEvent.VK_V, KeyEvent.CTRL_DOWN_MASK);
@@ -92,7 +48,7 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	private static final KeyStroke ACCELERATOR_SAVE = KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.ALT_DOWN_MASK);
 	private static final KeyStroke ACCELERATOR_SAVE_AS = KeyStroke.getKeyStroke(KeyEvent.VK_Z, KeyEvent.ALT_DOWN_MASK);
 	private static final KeyStroke ACCELERATOR_CLOSE_WINDOW = KeyStroke.getKeyStroke(KeyEvent.VK_W,
-		KeyEvent.ALT_DOWN_MASK);
+			KeyEvent.ALT_DOWN_MASK);
 
 	private static final String ICON_DIRECTORY = "icons" + File.separator;
 	private static final String CURSOR_DIRECTORY = "cursors" + File.separator;
@@ -132,8 +88,8 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 
 	private CircuitCanvas _canvas;
 
-	private JScrollBar _scrVertical;
-	private JScrollBar _scrHorizontal;
+	private JScrollBar _verticalScroll;
+	private JScrollBar _horizontalScroll;
 
 	private Circuit _circuit;
 
@@ -152,30 +108,30 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	private static final ImageIcon IMG_STOP = new ImageIcon(ICON_DIRECTORY + "stop.gif");
 
 	private final Action NEW_WIN_ACTION = new ActionNewWindow("Nueva",
-		"Crear una nueva ventana con un circuito en blanco", this);
+			"Crear una nueva ventana con un circuito en blanco", this);
 	private final Action COPY_ACTION = new ActionCopy("copy", "copia lo que existe en el ?rea de seleccion", IMG_COPY,
-		ACCELERATOR_COPY, this);
+			ACCELERATOR_COPY, this);
 	private final Action PASTE_ACTION = new ActionPaste("paste", "Pega la ultima copia", IMG_PASTE, ACCELERATOR_PASTE,
-		this);
+			this);
 	private final Action CUT_ACTION = new ActionCut("Cut", "Recorta un trozo de circuito", IMG_CUT, ACCELERATOR_CUT,
-		this);
+			this);
 	private final Action PAUSE_SIMULATION_ACTION = new ActionPauseSimulation("pause simulation",
-		"Pone pausa a la simulacion", IMG_STOP, ACCELERATOR_PAUSE, this);
+			"Pone pausa a la simulacion", IMG_STOP, ACCELERATOR_PAUSE, this);
 	private final Action START_SIMULATION_ACTION = new ActionStartSimulation("start simulation",
-		"Hace andar la simulacion", IMG_RUN, ACCELERATOR_START, this);
+			"Hace andar la simulacion", IMG_RUN, ACCELERATOR_START, this);
 	private final Action NEW_CIRCUIT_ACTION = new ActionNewCircuit("new circuit", "Un nuevo circuito en blanco",
-		IMG_NEW, ACCELERATOR_NEW, this);
+			IMG_NEW, ACCELERATOR_NEW, this);
 	private final Action CLONE_WINDOW_ACTION = new ActionCloneWindow("Clone",
-		"Crea una copia de la ventana usando el mismo circuito", null, ACCELERATOR_CLONE, this);
+			"Crea una copia de la ventana usando el mismo circuito", null, ACCELERATOR_CLONE, this);
 	private final Action CLOSE_WINDOW_ACTION = new ActionCloseWindow("Close", "Cierra esta ventana", null,
-		ACCELERATOR_CLOSE_WINDOW, this);
+			ACCELERATOR_CLOSE_WINDOW, this);
 
 	private final Action LOAD_CIRCUIT_ACTION = new ActionLoadCircuit("Load", "Carga un circuito", IMG_OPEN,
-		ACCELERATOR_LOAD, this);
+			ACCELERATOR_LOAD, this);
 	private final Action SAVE_ACTION = new ActionSaveCircuit("Save", "Guarda un circuito", IMG_SAVE, ACCELERATOR_SAVE,
-		this);
+			this);
 	private final Action SAVE_AS_ACTION = new ActionSaveAs("Save as...", "Guarda el circuito con un nombre diferente",
-		null, ACCELERATOR_SAVE_AS, this);
+			null, ACCELERATOR_SAVE_AS, this);
 
 	// Los botones
 	private JButton _buttonNew;
@@ -268,24 +224,22 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	/**
-	 * 
 	 * Creation date: (12/01/01 21:33:49)
-	 * 
-	 * @param ev
-	 *            java.awt.event.AdjustmentEvent
+	 *
+	 * @param ev java.awt.event.AdjustmentEvent
 	 */
 	public void adjustmentValueChanged(AdjustmentEvent ev) {
 		System.out.println("Adjustement changued: " + ev.getAdjustmentType());
 		switch (ev.getAdjustmentType()) {
-		case AdjustmentEvent.UNIT_INCREMENT:
-		case AdjustmentEvent.UNIT_DECREMENT:
-		case AdjustmentEvent.BLOCK_INCREMENT:
-		case AdjustmentEvent.BLOCK_DECREMENT:
-		case AdjustmentEvent.TRACK:
-			int hValue = _scrHorizontal.getValue();
-			int vValue = _scrVertical.getValue();
-			// canvas.setViewportCorner(hValue, vValue);
-			setViewportPosition(hValue, vValue);
+			case AdjustmentEvent.UNIT_INCREMENT:
+			case AdjustmentEvent.UNIT_DECREMENT:
+			case AdjustmentEvent.BLOCK_INCREMENT:
+			case AdjustmentEvent.BLOCK_DECREMENT:
+			case AdjustmentEvent.TRACK:
+				int hValue = _horizontalScroll.getValue();
+				int vValue = _verticalScroll.getValue();
+				// canvas.setViewportCorner(hValue, vValue);
+				setViewportPosition(hValue, vValue);
 		}
 		// Refrescamos las barras
 		refreshScrollbars();
@@ -293,11 +247,9 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 
 	/**
 	 * Un mensage de alerta
-	 * 
-	 * @param msg
-	 *            java.lang.String el mensage
-	 * @param title
-	 *            java.langStrin el titulo de la ventana
+	 *
+	 * @param msg   java.lang.String el mensage
+	 * @param title java.langStrin el titulo de la ventana
 	 */
 	private void alert(String msg, String title) {
 		JOptionPane.showConfirmDialog(this, msg, title, JOptionPane.OK_OPTION);
@@ -347,11 +299,9 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 		_cursorWrenchOpen = newCursor(CURSOR_DIRECTORY + "cursorWrenchOpen.gif", "wrenchOpen", 12, 0);
 		_cursorWrenchClose = newCursor(CURSOR_DIRECTORY + "cursorWrenchClose.gif", "wrenchClose", 8, 0);
 		_cursorWrenchCloseClone = newCursor(CURSOR_DIRECTORY + "cursorWrenchCloseClone.gif", "wrenchClone", 8, 0);
-		_cursorWrenchCloseConnection = newCursor(CURSOR_DIRECTORY + "cursorWrenchCloseConnect.gif", "wrenchConnect", 8,
-			0);
+		_cursorWrenchCloseConnection = newCursor(CURSOR_DIRECTORY + "cursorWrenchCloseConnect.gif", "wrenchConnect", 8, 0);
 		_cursorWrenchCloseMove = newCursor(CURSOR_DIRECTORY + "cursorWrenchCloseMove.gif", "wrenchMove", 8, 0);
-		_cursorWrenchCloseDelete = newCursor(CURSOR_DIRECTORY + "cursorWrenchCloseDelete.gif", "wrenchCloseDelete", 8,
-			0);
+		_cursorWrenchCloseDelete = newCursor(CURSOR_DIRECTORY + "cursorWrenchCloseDelete.gif", "wrenchCloseDelete", 8, 0);
 		_cursorWrenchOpenDelete = newCursor(CURSOR_DIRECTORY + "cursorWrenchOpenDelete.gif", "wrenchOpenDelete", 8, 0);
 
 	}
@@ -366,9 +316,6 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 		fileChooser.setFileFilter(new CircuitFilter());
 	}
 
-	/**
-	 * Crea la interfaz de la ventana Creation date: (22/03/01 15:32:44)
-	 */
 
 	private void buildInterface() {
 
@@ -489,12 +436,12 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	/**
-	 * Cresamos las barras de scroll Creation date: (22/03/01 16:40:35)
+	 * Creamos las barras de scroll Creation date: (22/03/01 16:40:35)
 	 */
 	public void buildScrollbars() {
 		// Agregamos las barras de scroll;
-		_scrVertical = new JScrollBar(JScrollBar.VERTICAL);
-		_scrHorizontal = new JScrollBar(JScrollBar.HORIZONTAL);
+		_verticalScroll = new JScrollBar(JScrollBar.VERTICAL);
+		_horizontalScroll = new JScrollBar(JScrollBar.HORIZONTAL);
 
 		/*
 		 * // Le ponemos los bordes scrHorizontal.setMinimum(0);
@@ -502,25 +449,23 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 		 * scrVertical.setMaximum(1000);
 		 */
 		// Los listener
-		_scrHorizontal.addAdjustmentListener(this);
-		_scrVertical.addAdjustmentListener(this);
+		_horizontalScroll.addAdjustmentListener(this);
+		_verticalScroll.addAdjustmentListener(this);
 
 		// Los ponemos en la ventana
-		getContentPane().add(_scrVertical, BorderLayout.EAST);
-		getContentPane().add(_scrHorizontal, BorderLayout.SOUTH);
+		getContentPane().add(_verticalScroll, BorderLayout.EAST);
+		getContentPane().add(_horizontalScroll, BorderLayout.SOUTH);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (15/03/01 23:12:29)
-	 */
 	public int closeCircuit() {
 		if (_circuit != null) {
 			if (_circuit.isModified()) {
 				int n = askToReplace();
 				if (n == JOptionPane.YES_OPTION) {
 					return saveAs();
-				} else if (n == JOptionPane.CANCEL_OPTION)
+				} else if (n == JOptionPane.CANCEL_OPTION) {
 					return CANCEL;
+				}
 			}
 			_circuit.removeWindow(this);
 			setCircuit(null);
@@ -530,44 +475,22 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	private int askToReplace() {
-		return JOptionPane.showConfirmDialog(this, "Circuit is not saved. Save it?", "Load...",
-			JOptionPane.YES_NO_CANCEL_OPTION);
+		return JOptionPane.showConfirmDialog(this, "Circuit is not saved. Save it?", "Load...", JOptionPane.YES_NO_CANCEL_OPTION);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (15/03/01 23:01:30)
-	 */
 	public void closeWindow() {
 		if (closeCircuit() != CANCEL) {
 			dispose();
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (18/01/01 11:13:38)
-	 * 
-	 * @param ev
-	 *            java.awt.event.ComponentEvent
-	 */
 	public void componentHidden(ComponentEvent ev) {
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (18/01/01 11:13:20)
-	 * 
-	 * @param ev
-	 *            java.awt.event.ComponentEvent
-	 */
 	public void componentMoved(ComponentEvent ev) {
 
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (18/01/01 11:13:56)
-	 * 
-	 * @param ev
-	 *            java.awt.event.ComponentEvent
-	 */
 	public void componentResized(ComponentEvent ev) {
 		Object target = ev.getComponent();
 
@@ -575,20 +498,16 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 			_canvas.setViewportWidth(_canvas.getWidth());
 			_canvas.setViewportHeight(_canvas.getHeight());
 
-			if (_canvas.showGrid)
+			if (_canvas.showGrid) {
 				_canvas.calculateGrid();
+			}
 		}
 
-		if (_scrVertical != null && _scrHorizontal != null)
+		if (_verticalScroll != null && _horizontalScroll != null) {
 			refreshScrollbars();
+		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (18/01/01 11:13:05)
-	 * 
-	 * @param ev
-	 *            java.awt.event.ComponentEvent
-	 */
 	public void componentShown(ComponentEvent ev) {
 		try {
 			refreshScrollbars();
@@ -597,11 +516,6 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 		}
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (11/12/00 16:14:29)
-	 * 
-	 * @return java.awt.Dimension
-	 */
 	public Dimension getPreferredSize() {
 		return new Dimension(500, 500);
 	}
@@ -615,19 +529,13 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 		});
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (28/12/00 18:09:13)
-	 * 
-	 * @param ev
-	 *            java.awt.event.ItemEvent
-	 */
 	public void itemStateChanged(ItemEvent ev) {
 	}
 
 	public void cloneWindow() {
 		if (getCircuit() == null) {
 			JOptionPane.showMessageDialog(this, "There's no circuit to clone window.", "Erro",
-				JOptionPane.ERROR_MESSAGE);
+					JOptionPane.ERROR_MESSAGE);
 			return;
 		}
 		Window window = new Window(getCircuit());
@@ -637,7 +545,8 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	/**
-	 * Crea una nueva ventana con un circuito en blanco Creation date: (25/03/01
+	 * Crea una nueva ventana con un circuito en blanco
+	 * Creation date: (25/03/01
 	 * 20:25:05)
 	 */
 	public void newWindow() {
@@ -658,8 +567,9 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 				int n = askToReplace();
 				if (n == JOptionPane.YES_OPTION) {
 					saveAs();
-				} else if (n == JOptionPane.CANCEL_OPTION)
+				} else if (n == JOptionPane.CANCEL_OPTION) {
 					return;
+				}
 			}
 			int returnVal = fileChooser.showOpenDialog(this);
 
@@ -677,16 +587,16 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 			alert("El archivo no es compatible con la version actual de JCSim", "Error");
 		} catch (Exception e) {
 			System.out.println("Otra " + e);
-		} finally {
 		}
 		refreshScrollbars();
 	}
 
 	public void mouseClicked(MouseEvent event) {
-		if (event.getClickCount() >= 2)
+		if (event.getClickCount() >= 2) {
 			state = state.mouseDoubleClick(this, event);
-		else
+		} else {
 			state = state.mouseClick(this, event);
+		}
 	}
 
 	public void mouseDragged(MouseEvent ev) {
@@ -713,14 +623,14 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	public void mouseReleased(MouseEvent event) {
-		if (((CircuitCanvas) event.getSource()) == _canvas) {
+		if (event.getSource() == _canvas) {
 			state = state.mouseUp(this, event);
 		}
 	}
 
 	/**
-	 * Crea una nueva ventana con un circuito vacio Creation date: (08/04/01
-	 * 16:55:13)
+	 * Crea una nueva ventana con un circuito vacio
+	 * Creation date: (08/04/01 16:55:13)
 	 */
 	private void newWin() {
 		Circuit circuit = new Circuit();
@@ -752,14 +662,16 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 			Box boxExtent;
 
 			// El extent se calcula solo si hay circuito
-			if (_circuit != null)
+			if (_circuit != null) {
 				boxExtent = _circuit.getExtent();
-			else
+			} else {
 				boxExtent = new Box(0, 0, 0, 0);
+			}
 
 			// SI el circuito no esta vacio
-			if (boxExtent.getXi() < boxExtent.getXf())
+			if (boxExtent.getXi() < boxExtent.getXf()) {
 				boxWorld.extend(boxExtent);
+			}
 
 			// Calculamos todo en vertical
 			int worldYMin = boxWorld.getYi();
@@ -786,43 +698,45 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 			// System.out.println("Min:" + worldXMin);
 			// System.out.println("VisibleAmoutn:" + visibleAmountX); // */
 			// System.out.println("--------------------->value:" +
-			// _scrHorizontal.getValue());
+			// _horizontalScroll.getValue());
 			// */
 
 			// Cambiamos
-			_scrVertical.setMaximum(worldYMax);
-			_scrVertical.setMinimum(worldYMin);
-			_scrHorizontal.setMaximum(worldXMax);
-			_scrHorizontal.setMinimum(worldXMin);
+			_verticalScroll.setMaximum(worldYMax);
+			_verticalScroll.setMinimum(worldYMin);
+			_horizontalScroll.setMaximum(worldXMax);
+			_horizontalScroll.setMinimum(worldXMin);
 
 			// Las areas visibles
-			_scrHorizontal.setVisibleAmount(visibleAmountX);
-			_scrVertical.setVisibleAmount(visibleAmountY);
+			_horizontalScroll.setVisibleAmount(visibleAmountX);
+			_verticalScroll.setVisibleAmount(visibleAmountY);
 
 			// ahora las posiciones
 
-			_scrHorizontal.setValue(valueX);
-			_scrVertical.setValue(valueY);
+			_horizontalScroll.setValue(valueX);
+			_verticalScroll.setValue(valueY);
 
 			// *****************************************
 			// seteamos el blockincrement
 			// *****************************************
 			// Si podemos avanzar varios pasos o no
 			// Horizontal
-			if (boxWorld.getWidth() >= (2 * visibleAmountX))
+			if (boxWorld.getWidth() >= (2 * visibleAmountX)) {
 				blockX = visibleAmountX;
-			else
+			} else {
 				blockX = (boxWorld.getWidth() / 2);
+			}
 			// Seteamos
-			_scrHorizontal.setBlockIncrement(blockX);
+			_horizontalScroll.setBlockIncrement(blockX);
 
 			// Vertical
-			if (boxWorld.getHeight() >= (2 * visibleAmountY))
+			if (boxWorld.getHeight() >= (2 * visibleAmountY)) {
 				blockY = visibleAmountY;
-			else
+			} else {
 				blockY = (boxWorld.getHeight() / 2);
+			}
 			// Seteamos
-			_scrVertical.setBlockIncrement(blockY);
+			_verticalScroll.setBlockIncrement(blockY);
 			// System.out.println("Exiting RefreshScrollBar: recursive level-------> "
 			// + recursivo);
 
@@ -834,8 +748,8 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	/**
-	 * El usuario a elegido grabar el circuito con el nombre actual Creation
-	 * date: (25/03/01 20:24:35)
+	 * El usuario a elegido grabar el circuito con el nombre actual
+	 * Creation date: (25/03/01 20:24:35)
 	 */
 	public int save() {
 		System.out.println("saving: " + _circuit.getName() + ".");
@@ -848,19 +762,20 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 						File file = fileChooser.getSelectedFile();
 
 						answer = JOptionPane.YES_OPTION;
-						if (file.exists())
-							answer = JOptionPane.showConfirmDialog(this, "Circuit already exist. Overwrite anyway?",
-								"Save as...", JOptionPane.YES_NO_OPTION);
+						if (file.exists()) {
+							answer = JOptionPane.showConfirmDialog(this, "Circuit already exist. Overwrite anyway?", "Save as...", JOptionPane.YES_NO_OPTION);
+						}
 						if (answer == JOptionPane.YES_OPTION) {
 							System.out.println("saving: " + file.getName() + ".");
 							_circuit.setName(file.getName());
 							setTitle(file.getName());
 							_circuit.save(file.getPath());
 							System.out.println("saved: " + file.getName() + ".");
-						} else if (answer == JOptionPane.CANCEL_OPTION)
+						} else if (answer == JOptionPane.CANCEL_OPTION) {
 							return CANCEL;
-						else
+						} else {
 							return NO;
+						}
 					}
 				}
 			}
@@ -874,9 +789,6 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 
 	/**
 	 * Grabamos con otro nombre Creation date: (25/03/01 20:24:48)
-	 * 
-	 * @param name
-	 *            java.lang.String
 	 */
 	public int saveAs() {
 		try {
@@ -885,12 +797,12 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
 				File file = fileChooser.getSelectedFile();
 
-				int n = JOptionPane.YES_OPTION;
-				if (file.exists())
-					n = JOptionPane.showConfirmDialog(this, "Circuit already exist. Overwrite anyway?", "Save as...",
-						JOptionPane.YES_NO_OPTION);
-
-				if (n == JOptionPane.YES_OPTION) {
+				int option = JOptionPane.YES_OPTION;
+				if (file.exists()) {
+					option = JOptionPane.showConfirmDialog(this, "Circuit already exist. Overwrite anyway?", "Save as...",
+							JOptionPane.YES_NO_OPTION);
+				}
+				if (option == JOptionPane.YES_OPTION) {
 					System.out.println("saving: " + file.getName() + ".");
 					_circuit.setName(file.getName());
 					setTitle(file.getName());
@@ -902,27 +814,25 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 				System.out.println("save cancelled by user.");
 				return CANCEL;
 			}
-			;
 		} catch (IOException e) {
 			alert("Error Saving circuit.", "Error");
 		}
-		;
 		return OK;
 	}
 
 	/**
-	 * Asignamos un circuito a esta ventana y al canvas Creation date: (08/04/01
-	 * 16:52:00)
-	 * 
-	 * @param circuit
-	 *            circuit.Circuit El nuevo circuiot de la ventana
+	 * Asignamos un circuito a esta ventana y al canvas
+	 * Creation date: (08/04/01 16:52:00)
+	 *
+	 * @param circuit circuit.Circuit El nuevo circuiot de la ventana
 	 */
 	public void setCircuit(Circuit circuit) {
 		if (_circuit != null) {
 			_circuit.removeWindow(this);
 		}
-		if (circuit != null)
+		if (circuit != null) {
 			circuit.removeWindow(this);
+		}
 
 		_circuit = circuit;
 		_canvas.setCircuit(circuit);
@@ -934,23 +844,14 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 			circuit.addWindow(this);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (24/04/01 10:00:21)
-	 */
 	public void setCloneCursor() {
 		_canvas.setCursor(_cursorWrenchCloseClone);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (24/04/01 10:00:21)
-	 */
 	public void setCloseDeleteCursor() {
 		_canvas.setCursor(_cursorWrenchCloseDelete);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (24/04/01 10:00:21)
-	 */
 	public void setConnectCursor() {
 		_canvas.setCursor(_cursorWrenchCloseConnection);
 	}
@@ -972,58 +873,53 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 		_canvas.setCursor(_cursorWrenchOpenDelete);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (23/04/01 6:20:09)
-	 * 
-	 * @param title
-	 *            java.lang.String
-	 */
 	public void setTitle(String title) {
 		super.setTitle(title == null ? "untitled.cir" : title);
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (24/10/01 0:50:39)
-	 */
 	public void setViewportPosition(int hValue, int vValue) {
 		Box boxViewport = new Box(_canvas.getViewport());
 		boxViewport.scale(1.0 / _canvas.zoom);
 		Box boxWorld = new Box(boxViewport);
 		Box boxExtent;
 
-		if (_circuit != null)
+		if (_circuit != null) {
 			boxExtent = _circuit.getExtent();
-		else
+		} else {
 			boxExtent = new Box(0, 0, 0, 0);
+		}
 
-		if (boxExtent.getXi() < boxExtent.getXf())
+		if (boxExtent.getXi() < boxExtent.getXf()) {
 			boxWorld.extend(boxExtent);
+		}
 
 		_canvas.setViewportCorner(hValue, vValue);
 	}
 
 	/**
-	 * Cambia el zoom del circuito Creation date: (06/04/01 12:17:10)
-	 * 
-	 * @param zoom
-	 *            double
+	 * Cambia el zoom del circuito
+	 * Creation date: (06/04/01 12:17:10)
+	 *
+	 * @param zoom double
 	 */
 	public void setZoom(double zoom) {
 		_canvas.setZoom(zoom);
 	}
 
 	public void startRepaint() {
-		if (_circuit != null)
+		if (_circuit != null) {
 			_circuit.startTimer();
+		}
 	}
 
 	/**
-	 * Echa a andar la simulacion del circuito Creation date: (05/06/01
-	 * 18:19:20)
+	 * Echa a andar la simulacion del circuito
+	 * Creation date: (05/06/01 18:19:20)
 	 */
 	public void playSimulation() {
-		if (_circuit != null)
+		if (_circuit != null) {
 			_circuit.startSimulation();
+		}
 
 		invertPausePlay();
 	}
@@ -1034,12 +930,13 @@ public class Window extends JFrame implements ActionListener, ItemListener, Adju
 	}
 
 	/**
-	 * Echa a andar la simulacion del circuito Creation date: (05/06/01
-	 * 18:19:20)
+	 * Echa a andar la simulacion del circuito
+	 * Creation date: (05/06/01 18:19:20)
 	 */
 	public void pauseSimulation() {
-		if (_circuit != null)
+		if (_circuit != null) {
 			_circuit.stopSimulation();
+		}
 
 		invertPausePlay();
 	}

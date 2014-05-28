@@ -1,16 +1,14 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
  * jcsim
- * 
+ * <p/>
  * Created on Jul 17, 2004
- * 
+ * <p/>
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- * 
  */
 public class ParamTreeState extends GateParameters {
 
@@ -19,16 +17,10 @@ public class ParamTreeState extends GateParameters {
 	// El estatico
 	public static ParamTreeState PARAM_TREE_STATE_DEFAULT = new ParamTreeState(1);
 
-	/**
-	 * ParamFFData constructor comment.
-	 */
 	public ParamTreeState() {
 		super();
 	}
 
-	/**
-	 * ParamNot constructor comment.
-	 */
 	public ParamTreeState(int delay) {
 		super();
 		_delay = delay;

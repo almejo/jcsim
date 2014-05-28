@@ -1,29 +1,25 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
+
+import cl.alejo.jcsim.csim.circuit.*;
+import cl.alejo.jcsim.csim.dom.Gate;
+import cl.alejo.jcsim.csim.dom.Pin;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-
-import cl.alejo.jcsim.csim.circuit.Box;
-import cl.alejo.jcsim.csim.circuit.Circuit;
-import cl.alejo.jcsim.csim.circuit.ContactPin;
-import cl.alejo.jcsim.csim.circuit.Point;
-import cl.alejo.jcsim.csim.circuit.ProtoboardPin;
-import cl.alejo.jcsim.csim.dom.Gate;
-import cl.alejo.jcsim.csim.dom.Pin;
 
 public class TemplateGate extends Gate {
 
@@ -75,7 +71,7 @@ public class TemplateGate extends Gate {
 	}
 
 	public EncapsulatedDescriptor getNewEncapsulatedDescriptor(Box box, List listCtt, EncapsulatedGateData[] gateData,
-		int outPinCount) {
+															   int outPinCount) {
 
 		// Ahora creo un descriptor de mi compuerta y lo lleno
 		EncapsulatedDescriptor encapsulatedDesc = new EncapsulatedDescriptor();
@@ -174,12 +170,6 @@ public class TemplateGate extends Gate {
 		return ndxTable;
 	}
 
-	/**
-	 * Insert the method's description here. Creation date: (28/06/01 13:33:41)
-	 * 
-	 * @param listCtt
-	 *            java.util.List
-	 */
 	public void removeFalseTerminals(List listCtt) {
 
 		// La lista a remover
@@ -212,22 +202,24 @@ public class TemplateGate extends Gate {
 			Gate gate = (Gate) iter.next();
 			int[][] connectTo = new int[gate.pinCount()][2];
 			gateData[i++] = new EncapsulatedGateData(gate.getGateDescriptor(), (GateParameters) gate.getParameters()
-				.clone(), connectTo);
+					.clone(), connectTo);
 			// El indice aumenta en la cantidad de pines de la compuerta
 
 		}
 	}
 
 	public int getPinIndex(Pin pin) {
-		if (pin == null)
+		if (pin == null) {
 			return -1;
+		}
 
 		// Buscamos
 		int max = pin.getGate().pinCount();
-		for (int j = 0; j < max; j++)
-			if (pin == pin.getGate().getPin(j))
+		for (int j = 0; j < max; j++) {
+			if (pin == pin.getGate().getPin(j)) {
 				return j;
-
+			}
+		}
 		// Fallo
 		return -1;
 	}

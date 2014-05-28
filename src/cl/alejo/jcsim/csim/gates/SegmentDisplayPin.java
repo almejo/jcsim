@@ -1,17 +1,18 @@
 package cl.alejo.jcsim.csim.gates;
 
 /**
- * 
+ *
  * jcsim
- * 
+ *
  * Created on Jul 17, 2004
- * 
+ *
  * This program is distributed under the terms of the GNU General Public License
  * The license is included in license.txt
- * 
+ *
  * @author: Alejandro Vera
- *  
+ *
  */
+
 import cl.alejo.jcsim.csim.circuit.Circuit;
 import cl.alejo.jcsim.csim.dom.Gate;
 import cl.alejo.jcsim.csim.dom.Pin;
@@ -32,11 +33,11 @@ public class SegmentDisplayPin extends Pin {
 	}
 
 	/**
-	 * Cambion el pin Creation date: (27/03/01 19:40:37)
+	 * Cambio en el pin
+	 * Creation date: (27/03/01 19:40:37)
 	 */
 	public void hasChanged() {
-		Pin[] pin = ((SegmentDisplay) _gate).getPin();
-		int number = computeDisplay(pin[0].getInValue(), pin[1].getInValue(), pin[2].getInValue(), pin[3].getInValue());
-		((ParamSegmentDisplay) _gate.getParameters()).number = number;
+		Pin[] pin = _gate.getPin();
+		((ParamSegmentDisplay) _gate.getParameters()).number = (int) computeDisplay(pin[0].getInValue(), pin[1].getInValue(), pin[2].getInValue(), pin[3].getInValue());
 	}
 }
